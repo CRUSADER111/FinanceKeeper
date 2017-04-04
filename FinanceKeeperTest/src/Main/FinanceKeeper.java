@@ -84,6 +84,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
         tblExpenses = new javax.swing.JTable();
         lblExpenses = new javax.swing.JLabel();
         pNewLogin = new javax.swing.JPanel();
+        lblNewLogin = new javax.swing.JLabel();
+        txtNewID = new javax.swing.JTextField();
+        pfNewPassword = new javax.swing.JPasswordField();
+        pfCheckPassword = new javax.swing.JPasswordField();
         mbMenuBar = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
         miLogout = new javax.swing.JMenuItem();
@@ -175,7 +179,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtUserID)
                             .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(358, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pLoginLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblNewAcc)
@@ -190,7 +194,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(txtUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
                     .addComponent(btnExit))
@@ -355,7 +359,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         pHome.setLayout(pHomeLayout);
         pHomeLayout.setHorizontalGroup(
             pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 719, Short.MAX_VALUE)
             .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pHomeLayout.createSequentialGroup()
                     .addGap(4, 4, 4)
@@ -368,7 +372,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         );
         pHomeLayout.setVerticalGroup(
             pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGap(0, 444, Short.MAX_VALUE)
             .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pHomeLayout.createSequentialGroup()
                     .addGap(28, 28, 28)
@@ -377,7 +381,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(pnlOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(51, Short.MAX_VALUE)))
+                    .addContainerGap(116, Short.MAX_VALUE)))
         );
 
         pMain.add(pHome, "pHome");
@@ -407,7 +411,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(pnlAccDetailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtAccID, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addComponent(txtAccID, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                     .addComponent(txtForename, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtSurname)
                     .addComponent(txtEmail))
@@ -497,7 +501,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(txtTD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtNW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pAccountsLayout = new javax.swing.GroupLayout(pAccounts);
@@ -506,7 +510,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             pAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAccountsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -516,8 +520,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pAccountsLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(pAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-                    .addComponent(pnlIncome, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
+                    .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                    .addComponent(pnlIncome, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -548,7 +552,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         pUtilities.setLayout(pUtilitiesLayout);
         pUtilitiesLayout.setHorizontalGroup(
             pUtilitiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+            .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
             .addGroup(pUtilitiesLayout.createSequentialGroup()
                 .addGap(214, 214, 214)
                 .addComponent(lblUtilities)
@@ -559,7 +563,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pUtilitiesLayout.createSequentialGroup()
                 .addComponent(lblUtilities)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
         );
 
         pMain.add(pUtilities, "pUtilities");
@@ -589,7 +593,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         pExpenses.setLayout(pExpensesLayout);
         pExpensesLayout.setHorizontalGroup(
             pExpensesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+            .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
             .addGroup(pExpensesLayout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addComponent(lblExpenses)
@@ -600,20 +604,51 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pExpensesLayout.createSequentialGroup()
                 .addComponent(lblExpenses)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+                .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
         );
 
         pMain.add(pExpenses, "pExpenses");
+
+        lblNewLogin.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lblNewLogin.setText("New Login");
+
+        txtNewID.setForeground(java.awt.SystemColor.textInactiveText);
+        txtNewID.setText("Enter your chosen ID...");
+
+        pfNewPassword.setText("Password");
+        pfNewPassword.setToolTipText("Enter your chosen password...");
+
+        pfCheckPassword.setText("Password");
 
         javax.swing.GroupLayout pNewLoginLayout = new javax.swing.GroupLayout(pNewLogin);
         pNewLogin.setLayout(pNewLoginLayout);
         pNewLoginLayout.setHorizontalGroup(
             pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(pNewLoginLayout.createSequentialGroup()
+                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pNewLoginLayout.createSequentialGroup()
+                        .addGap(294, 294, 294)
+                        .addComponent(lblNewLogin))
+                    .addGroup(pNewLoginLayout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNewID, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(pfNewPassword)
+                            .addComponent(pfCheckPassword))))
+                .addContainerGap(291, Short.MAX_VALUE))
         );
         pNewLoginLayout.setVerticalGroup(
             pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGroup(pNewLoginLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(lblNewLogin)
+                .addGap(46, 46, 46)
+                .addComponent(txtNewID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(pfCheckPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         pMain.add(pNewLogin, "pNewLogin");
@@ -965,6 +1000,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JLabel lblIncomeTitle;
     private javax.swing.JLabel lblLoginTitle;
     private javax.swing.JLabel lblNewAcc;
+    private javax.swing.JLabel lblNewLogin;
     private javax.swing.JLabel lblOverview;
     private javax.swing.JLabel lblSavedReturn;
     private javax.swing.JLabel lblSavedTitle;
@@ -994,6 +1030,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JPanel pMain;
     private javax.swing.JPanel pNewLogin;
     private javax.swing.JPanel pUtilities;
+    private javax.swing.JPasswordField pfCheckPassword;
+    private javax.swing.JPasswordField pfNewPassword;
     private javax.swing.JPasswordField pfPassword;
     private javax.swing.JPanel pnlAccDetails;
     private javax.swing.JPanel pnlIncome;
@@ -1010,6 +1048,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JTextField txtIncome;
     private javax.swing.JTextField txtNI;
     private javax.swing.JTextField txtNW;
+    private javax.swing.JTextField txtNewID;
     private javax.swing.JTextField txtSurname;
     private javax.swing.JTextField txtTD;
     private javax.swing.JTextField txtTFA;
