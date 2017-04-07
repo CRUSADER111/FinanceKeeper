@@ -36,8 +36,17 @@ public class FinanceKeeper extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgAED = new javax.swing.ButtonGroup();
         pMain = new javax.swing.JPanel();
+        pNewLogin = new javax.swing.JPanel();
+        lblNewLogin = new javax.swing.JLabel();
+        txtNewID = new javax.swing.JTextField();
+        pfNewPassword = new javax.swing.JPasswordField();
+        pfCheckPassword = new javax.swing.JPasswordField();
+        btnSubmitL = new javax.swing.JButton();
+        lblpwError = new javax.swing.JLabel();
         pLogin = new javax.swing.JPanel();
+        pnlAccLogin = new javax.swing.JPanel();
         lblLoginTitle = new javax.swing.JLabel();
         txtUserID = new javax.swing.JTextField();
         pfPassword = new javax.swing.JPasswordField();
@@ -62,11 +71,16 @@ public class FinanceKeeper extends javax.swing.JFrame {
         btnLogout = new javax.swing.JButton();
         btnExit1 = new javax.swing.JButton();
         pAccounts = new javax.swing.JPanel();
+        lblAccount = new javax.swing.JLabel();
         pnlAccDetails = new javax.swing.JPanel();
         txtAccID = new javax.swing.JTextField();
         txtForename = new javax.swing.JTextField();
         txtSurname = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
+        rbAdd = new javax.swing.JRadioButton();
+        rbEdit = new javax.swing.JRadioButton();
+        rbDelete = new javax.swing.JRadioButton();
+        btnSubmit = new javax.swing.JButton();
         pnlIncome = new javax.swing.JPanel();
         txtIncome = new javax.swing.JTextField();
         txtTFA = new javax.swing.JTextField();
@@ -79,24 +93,29 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblUtilities = new javax.swing.JLabel();
         spUtilities = new javax.swing.JScrollPane();
         tblUtilities = new javax.swing.JTable();
+        pUtilDetails = new javax.swing.JPanel();
+        txtItemName = new javax.swing.JTextField();
+        txtItemValue = new javax.swing.JTextField();
+        cbBillingCycle = new javax.swing.JComboBox<>();
+        rbAddU = new javax.swing.JRadioButton();
+        rbEditU = new javax.swing.JRadioButton();
+        rbDeleteU = new javax.swing.JRadioButton();
+        btnSubmitU = new javax.swing.JButton();
         pExpenses = new javax.swing.JPanel();
         spExpenses = new javax.swing.JScrollPane();
         tblExpenses = new javax.swing.JTable();
         lblExpenses = new javax.swing.JLabel();
-        pNewLogin = new javax.swing.JPanel();
-        lblNewLogin = new javax.swing.JLabel();
-        txtNewID = new javax.swing.JTextField();
-        pfNewPassword = new javax.swing.JPasswordField();
-        pfCheckPassword = new javax.swing.JPasswordField();
+        pExpDetails = new javax.swing.JPanel();
+        txtExpName = new javax.swing.JTextField();
+        txtExpValue = new javax.swing.JTextField();
+        rbAddE = new javax.swing.JRadioButton();
+        rbEditE = new javax.swing.JRadioButton();
+        rbDeleteE = new javax.swing.JRadioButton();
+        btnSubmitE = new javax.swing.JButton();
         mbMenuBar = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
         miLogout = new javax.swing.JMenuItem();
         miExit = new javax.swing.JMenuItem();
-        mEdit = new javax.swing.JMenu();
-        mExpenses = new javax.swing.JMenu();
-        miAdd = new javax.swing.JMenuItem();
-        miEdit = new javax.swing.JMenuItem();
-        miDelete = new javax.swing.JMenuItem();
         mNav = new javax.swing.JMenu();
         miHome = new javax.swing.JMenuItem();
         miAccounts = new javax.swing.JMenuItem();
@@ -109,12 +128,101 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
         pMain.setLayout(new java.awt.CardLayout());
 
+        lblNewLogin.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lblNewLogin.setText("New Login");
+
+        txtNewID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNewID.setForeground(java.awt.Color.gray);
+        txtNewID.setText("Enter your chosen ID...");
+        txtNewID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNewIDFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNewIDFocusLost(evt);
+            }
+        });
+
+        pfNewPassword.setText("Password");
+        pfNewPassword.setToolTipText("Enter your chosen password...");
+        pfNewPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pfNewPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pfNewPasswordFocusLost(evt);
+            }
+        });
+
+        pfCheckPassword.setText("Password");
+        pfCheckPassword.setToolTipText("Please retype your password...");
+        pfCheckPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pfCheckPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pfCheckPasswordFocusLost(evt);
+            }
+        });
+
+        btnSubmitL.setText("Submit");
+        btnSubmitL.setEnabled(false);
+
+        lblpwError.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblpwError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout pNewLoginLayout = new javax.swing.GroupLayout(pNewLogin);
+        pNewLogin.setLayout(pNewLoginLayout);
+        pNewLoginLayout.setHorizontalGroup(
+            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pNewLoginLayout.createSequentialGroup()
+                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pNewLoginLayout.createSequentialGroup()
+                        .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pNewLoginLayout.createSequentialGroup()
+                                .addGap(294, 294, 294)
+                                .addComponent(lblNewLogin))
+                            .addGroup(pNewLoginLayout.createSequentialGroup()
+                                .addGap(316, 316, 316)
+                                .addComponent(btnSubmitL))
+                            .addGroup(pNewLoginLayout.createSequentialGroup()
+                                .addGap(273, 273, 273)
+                                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNewID, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(pfNewPassword)
+                                    .addComponent(pfCheckPassword))))
+                        .addGap(0, 285, Short.MAX_VALUE))
+                    .addGroup(pNewLoginLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblpwError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pNewLoginLayout.setVerticalGroup(
+            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pNewLoginLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(lblNewLogin)
+                .addGap(46, 46, 46)
+                .addComponent(txtNewID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(pfCheckPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnSubmitL)
+                .addGap(18, 18, 18)
+                .addComponent(lblpwError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        pMain.add(pNewLogin, "pNewLogin");
+
         lblLoginTitle.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblLoginTitle.setText("Finance Keeper Login");
         lblLoginTitle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         txtUserID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtUserID.setForeground(javax.swing.UIManager.getDefaults().getColor("textInactiveText"));
+        txtUserID.setForeground(java.awt.Color.gray);
         txtUserID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUserID.setText("Enter User ID...");
         txtUserID.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -161,46 +269,64 @@ public class FinanceKeeper extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pnlAccLoginLayout = new javax.swing.GroupLayout(pnlAccLogin);
+        pnlAccLogin.setLayout(pnlAccLoginLayout);
+        pnlAccLoginLayout.setHorizontalGroup(
+            pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccLoginLayout.createSequentialGroup()
+                .addGap(0, 51, Short.MAX_VALUE)
+                .addGroup(pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccLoginLayout.createSequentialGroup()
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccLoginLayout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNewAcc)
+                            .addGap(54, 54, 54)))
+                    .addComponent(lblLoginTitle))
+                .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccLoginLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtUserID)
+                    .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65))
+        );
+        pnlAccLoginLayout.setVerticalGroup(
+            pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAccLoginLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(lblLoginTitle)
+                .addGap(50, 50, 50)
+                .addComponent(txtUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(btnExit))
+                .addGap(18, 18, 18)
+                .addComponent(lblNewAcc)
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pLoginLayout = new javax.swing.GroupLayout(pLogin);
         pLogin.setLayout(pLoginLayout);
         pLoginLayout.setHorizontalGroup(
             pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pLoginLayout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pLoginLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblLoginTitle)
-                    .addGroup(pLoginLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtUserID)
-                            .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(358, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pLoginLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblNewAcc)
-                .addGap(195, 195, 195))
+                .addGap(204, 204, 204)
+                .addComponent(pnlAccLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(211, 211, 211))
         );
         pLoginLayout.setVerticalGroup(
             pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pLoginLayout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(lblLoginTitle)
-                .addGap(38, 38, 38)
-                .addComponent(txtUserID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
-                .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
-                    .addComponent(btnExit))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNewAcc)
-                .addGap(48, 48, 48))
+                .addGap(45, 45, 45)
+                .addComponent(pnlAccLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pMain.add(pLogin, "pLogin");
@@ -359,50 +485,65 @@ public class FinanceKeeper extends javax.swing.JFrame {
         pHome.setLayout(pHomeLayout);
         pHomeLayout.setHorizontalGroup(
             pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 719, Short.MAX_VALUE)
-            .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pHomeLayout.createSequentialGroup()
-                    .addGap(4, 4, 4)
-                    .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lblOverview)
-                        .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addComponent(pnlOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pHomeLayout.createSequentialGroup()
+                .addContainerGap(121, Short.MAX_VALUE)
+                .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblOverview)
+                    .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pnlOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110))
         );
         pHomeLayout.setVerticalGroup(
             pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
-            .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pHomeLayout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(lblOverview)
-                    .addGap(18, 18, 18)
-                    .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(pnlOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(116, Short.MAX_VALUE)))
+            .addGroup(pHomeLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(lblOverview)
+                .addGap(18, 18, 18)
+                .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pMain.add(pHome, "pHome");
 
+        lblAccount.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lblAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAccount.setText("Account");
+
         pnlAccDetails.setPreferredSize(new java.awt.Dimension(187, 257));
 
+        txtAccID.setEditable(false);
         txtAccID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtAccID.setForeground(java.awt.Color.gray);
         txtAccID.setText("Account ID...");
 
+        txtForename.setEditable(false);
         txtForename.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtForename.setForeground(java.awt.Color.gray);
         txtForename.setText("Forename...");
 
+        txtSurname.setEditable(false);
         txtSurname.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtSurname.setForeground(java.awt.Color.gray);
         txtSurname.setText("Surname...");
 
+        txtEmail.setEditable(false);
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtEmail.setForeground(java.awt.Color.gray);
         txtEmail.setText("Email...");
+
+        bgAED.add(rbAdd);
+        rbAdd.setText("Add Details");
+
+        bgAED.add(rbEdit);
+        rbEdit.setText("Edit Details");
+
+        bgAED.add(rbDelete);
+        rbDelete.setText("Delete Account");
+
+        btnSubmit.setText("Submit");
 
         javax.swing.GroupLayout pnlAccDetailsLayout = new javax.swing.GroupLayout(pnlAccDetails);
         pnlAccDetails.setLayout(pnlAccDetailsLayout);
@@ -411,11 +552,20 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(pnlAccDetailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtAccID, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                    .addComponent(txtAccID, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                     .addComponent(txtForename, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtSurname)
                     .addComponent(txtEmail))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccDetailsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(rbDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rbEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rbAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92))
         );
         pnlAccDetailsLayout.setVerticalGroup(
             pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,7 +578,16 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(txtSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlAccDetailsLayout.createSequentialGroup()
+                        .addComponent(rbAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbDelete))
+                    .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(71, 71, 71))
         );
 
         pnlIncome.setPreferredSize(new java.awt.Dimension(187, 45));
@@ -501,7 +660,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(txtTD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtNW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pAccountsLayout = new javax.swing.GroupLayout(pAccounts);
@@ -510,18 +669,24 @@ public class FinanceKeeper extends javax.swing.JFrame {
             pAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pAccountsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(pAccountsLayout.createSequentialGroup()
+                .addGap(308, 308, 308)
+                .addComponent(lblAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pAccountsLayout.setVerticalGroup(
             pAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pAccountsLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(pAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
-                    .addComponent(pnlIncome, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(lblAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(pAccountsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlIncome, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -548,22 +713,90 @@ public class FinanceKeeper extends javax.swing.JFrame {
         });
         spUtilities.setViewportView(tblUtilities);
 
+        txtItemName.setText("Enter Item Name...");
+
+        txtItemValue.setText("Enter Item Value...");
+
+        cbBillingCycle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a Billing Cycle...", "N/A", "1 Month", "3 Month", "4 Month", "Annual" }));
+        cbBillingCycle.setToolTipText("If it is not a set cycle then select N/A.");
+
+        bgAED.add(rbAddU);
+        rbAddU.setText("Add Item");
+
+        bgAED.add(rbEditU);
+        rbEditU.setText("Edit Item");
+
+        bgAED.add(rbDeleteU);
+        rbDeleteU.setText("Delete Item");
+
+        btnSubmitU.setText("Submit");
+
+        javax.swing.GroupLayout pUtilDetailsLayout = new javax.swing.GroupLayout(pUtilDetails);
+        pUtilDetails.setLayout(pUtilDetailsLayout);
+        pUtilDetailsLayout.setHorizontalGroup(
+            pUtilDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pUtilDetailsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pUtilDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtItemName)
+                    .addComponent(txtItemValue)
+                    .addComponent(cbBillingCycle, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pUtilDetailsLayout.createSequentialGroup()
+                        .addGroup(pUtilDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(rbDeleteU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbEditU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbAddU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pUtilDetailsLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(btnSubmitU, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(98, Short.MAX_VALUE))
+        );
+        pUtilDetailsLayout.setVerticalGroup(
+            pUtilDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pUtilDetailsLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(txtItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtItemValue, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cbBillingCycle, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(rbAddU)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbEditU)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbDeleteU)
+                .addGap(18, 18, 18)
+                .addComponent(btnSubmitU, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pUtilitiesLayout = new javax.swing.GroupLayout(pUtilities);
         pUtilities.setLayout(pUtilitiesLayout);
         pUtilitiesLayout.setHorizontalGroup(
             pUtilitiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
             .addGroup(pUtilitiesLayout.createSequentialGroup()
-                .addGap(214, 214, 214)
+                .addGap(305, 305, 305)
                 .addComponent(lblUtilities)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pUtilitiesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pUtilDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spUtilities, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pUtilitiesLayout.setVerticalGroup(
             pUtilitiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pUtilitiesLayout.createSequentialGroup()
                 .addComponent(lblUtilities)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+                .addGroup(pUtilitiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                    .addGroup(pUtilitiesLayout.createSequentialGroup()
+                        .addComponent(pUtilDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pMain.add(pUtilities, "pUtilities");
@@ -589,13 +822,76 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblExpenses.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblExpenses.setText("Expenses");
 
+        txtExpName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtExpName.setText("Enter the Expense name...");
+
+        txtExpValue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtExpValue.setText("Enter the Value of the Expense...");
+
+        bgAED.add(rbAddE);
+        rbAddE.setText("Add Details");
+
+        bgAED.add(rbEditE);
+        rbEditE.setText("Edit Details");
+
+        bgAED.add(rbDeleteE);
+        rbDeleteE.setText("Delete Account");
+
+        btnSubmitE.setText("Submit");
+
+        javax.swing.GroupLayout pExpDetailsLayout = new javax.swing.GroupLayout(pExpDetails);
+        pExpDetails.setLayout(pExpDetailsLayout);
+        pExpDetailsLayout.setHorizontalGroup(
+            pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pExpDetailsLayout.createSequentialGroup()
+                .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pExpDetailsLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtExpName)
+                            .addComponent(txtExpValue, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+                    .addGroup(pExpDetailsLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(rbDeleteE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbEditE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rbAddE, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pExpDetailsLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(btnSubmitE, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pExpDetailsLayout.setVerticalGroup(
+            pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pExpDetailsLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(txtExpName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(txtExpValue, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(rbAddE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbEditE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rbDeleteE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSubmitE, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pExpensesLayout = new javax.swing.GroupLayout(pExpenses);
         pExpenses.setLayout(pExpensesLayout);
         pExpensesLayout.setHorizontalGroup(
             pExpensesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pExpensesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pExpDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spExpenses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pExpensesLayout.createSequentialGroup()
-                .addGap(206, 206, 206)
+                .addGap(312, 312, 312)
                 .addComponent(lblExpenses)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -604,54 +900,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pExpensesLayout.createSequentialGroup()
                 .addComponent(lblExpenses)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))
+                .addGroup(pExpensesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pExpDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(spExpenses, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pMain.add(pExpenses, "pExpenses");
-
-        lblNewLogin.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        lblNewLogin.setText("New Login");
-
-        txtNewID.setForeground(java.awt.SystemColor.textInactiveText);
-        txtNewID.setText("Enter your chosen ID...");
-
-        pfNewPassword.setText("Password");
-        pfNewPassword.setToolTipText("Enter your chosen password...");
-
-        pfCheckPassword.setText("Password");
-
-        javax.swing.GroupLayout pNewLoginLayout = new javax.swing.GroupLayout(pNewLogin);
-        pNewLogin.setLayout(pNewLoginLayout);
-        pNewLoginLayout.setHorizontalGroup(
-            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pNewLoginLayout.createSequentialGroup()
-                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pNewLoginLayout.createSequentialGroup()
-                        .addGap(294, 294, 294)
-                        .addComponent(lblNewLogin))
-                    .addGroup(pNewLoginLayout.createSequentialGroup()
-                        .addGap(273, 273, 273)
-                        .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNewID, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                            .addComponent(pfNewPassword)
-                            .addComponent(pfCheckPassword))))
-                .addContainerGap(291, Short.MAX_VALUE))
-        );
-        pNewLoginLayout.setVerticalGroup(
-            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pNewLoginLayout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(lblNewLogin)
-                .addGap(46, 46, 46)
-                .addComponent(txtNewID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(pfCheckPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
-        );
-
-        pMain.add(pNewLogin, "pNewLogin");
 
         mFile.setMnemonic('F');
         mFile.setText("File");
@@ -675,28 +930,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
         mFile.add(miExit);
 
         mbMenuBar.add(mFile);
-
-        mEdit.setMnemonic('E');
-        mEdit.setText("Edit");
-
-        mExpenses.setMnemonic('E');
-        mExpenses.setText("Expenses");
-
-        miAdd.setMnemonic('A');
-        miAdd.setText("Add New");
-        mExpenses.add(miAdd);
-
-        miEdit.setMnemonic('E');
-        miEdit.setText("Edit");
-        mExpenses.add(miEdit);
-
-        miDelete.setMnemonic('D');
-        miDelete.setText("Delete");
-        mExpenses.add(miDelete);
-
-        mEdit.add(mExpenses);
-
-        mbMenuBar.add(mEdit);
 
         mNav.setMnemonic('N');
         mNav.setText("Navigate");
@@ -950,6 +1183,110 @@ public class FinanceKeeper extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExit1ActionPerformed
 
+    private void txtNewIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNewIDFocusGained
+        // TODO add your handling code here:
+        if(txtNewID.getText().equals("Enter your chosen ID...")) {
+            txtNewID.setText("");
+            txtNewID.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtNewIDFocusGained
+
+    private void txtNewIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNewIDFocusLost
+        // TODO add your handling code here:
+        if(txtNewID.getText().equals("")) {
+            txtNewID.setText("Enter your chosen ID...");
+            txtNewID.setForeground(Color.gray);
+        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
+            lblpwError.setText("");
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            btnSubmitL.setEnabled(true);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else {
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            lblpwError.setText("Please enter a valid Account ID!");
+            btnSubmitL.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtNewIDFocusLost
+
+    private void pfNewPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfNewPasswordFocusGained
+        // TODO add your handling code here:
+        if(pfNewPassword.getText().equals("Password")) {
+            pfNewPassword.setText("");
+        }
+    }//GEN-LAST:event_pfNewPasswordFocusGained
+
+    private void pfNewPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfNewPasswordFocusLost
+        // TODO add your handling code here:
+        if(pfNewPassword.getText().equals("")) {
+            pfNewPassword.setText("Password");
+        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
+            lblpwError.setText("");
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            btnSubmitL.setEnabled(true);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else {
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            lblpwError.setText("Please enter a valid Account ID!");
+            btnSubmitL.setEnabled(false);
+        }
+    }//GEN-LAST:event_pfNewPasswordFocusLost
+
+    private void pfCheckPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfCheckPasswordFocusGained
+        // TODO add your handling code here:
+        if(pfCheckPassword.getText().equals("Password")) {
+            pfCheckPassword.setText("");
+        }
+    }//GEN-LAST:event_pfCheckPasswordFocusGained
+
+    private void pfCheckPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfCheckPasswordFocusLost
+        // TODO add your handling code here:
+        if(pfCheckPassword.getText().equals("")) {
+            pfCheckPassword.setText("Password");
+        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
+            lblpwError.setText("");
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            btnSubmitL.setEnabled(true);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else {
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            lblpwError.setText("Please enter a valid Account ID!");
+            btnSubmitL.setEnabled(false);
+        }
+    }//GEN-LAST:event_pfCheckPasswordFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -986,13 +1323,20 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgAED;
     private javax.swing.JButton btnAccounts;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnExit1;
     private javax.swing.JButton btnExpenses;
     public javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnSubmitE;
+    private javax.swing.JButton btnSubmitL;
+    private javax.swing.JButton btnSubmitU;
     private javax.swing.JButton btnUtility;
+    private javax.swing.JComboBox<String> cbBillingCycle;
+    private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblExpReturn;
     private javax.swing.JLabel lblExpenses;
     private javax.swing.JLabel lblExpensesTitle;
@@ -1007,45 +1351,57 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JLabel lblUtilities;
     private javax.swing.JLabel lblUtilityReturn;
     private javax.swing.JLabel lblUtilityTitle;
-    private javax.swing.JMenu mEdit;
-    private javax.swing.JMenu mExpenses;
+    private javax.swing.JLabel lblpwError;
     private javax.swing.JMenu mFile;
     private javax.swing.JMenu mHelp;
     private javax.swing.JMenu mNav;
     private javax.swing.JMenuBar mbMenuBar;
     private javax.swing.JMenuItem miAbout;
     private javax.swing.JMenuItem miAccounts;
-    private javax.swing.JMenuItem miAdd;
-    private javax.swing.JMenuItem miDelete;
-    private javax.swing.JMenuItem miEdit;
     private javax.swing.JMenuItem miExit;
     private javax.swing.JMenuItem miExpenses;
     private javax.swing.JMenuItem miHome;
     private javax.swing.JMenuItem miLogout;
     private javax.swing.JMenuItem miUtilities;
     private javax.swing.JPanel pAccounts;
+    private javax.swing.JPanel pExpDetails;
     private javax.swing.JPanel pExpenses;
     private javax.swing.JPanel pHome;
     private javax.swing.JPanel pLogin;
     private javax.swing.JPanel pMain;
     private javax.swing.JPanel pNewLogin;
+    private javax.swing.JPanel pUtilDetails;
     private javax.swing.JPanel pUtilities;
     private javax.swing.JPasswordField pfCheckPassword;
     private javax.swing.JPasswordField pfNewPassword;
     private javax.swing.JPasswordField pfPassword;
     private javax.swing.JPanel pnlAccDetails;
+    private javax.swing.JPanel pnlAccLogin;
     private javax.swing.JPanel pnlIncome;
     private javax.swing.JPanel pnlOptions;
     private javax.swing.JPanel pnlStatistics;
+    private javax.swing.JRadioButton rbAdd;
+    private javax.swing.JRadioButton rbAddE;
+    private javax.swing.JRadioButton rbAddU;
+    private javax.swing.JRadioButton rbDelete;
+    private javax.swing.JRadioButton rbDeleteE;
+    private javax.swing.JRadioButton rbDeleteU;
+    private javax.swing.JRadioButton rbEdit;
+    private javax.swing.JRadioButton rbEditE;
+    private javax.swing.JRadioButton rbEditU;
     private javax.swing.JScrollPane spExpenses;
     private javax.swing.JScrollPane spUtilities;
     private javax.swing.JTable tblExpenses;
     private javax.swing.JTable tblUtilities;
     private javax.swing.JTextField txtAccID;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtExpName;
+    private javax.swing.JTextField txtExpValue;
     private javax.swing.JTextField txtForename;
     private javax.swing.JTextField txtIT;
     private javax.swing.JTextField txtIncome;
+    private javax.swing.JTextField txtItemName;
+    private javax.swing.JTextField txtItemValue;
     private javax.swing.JTextField txtNI;
     private javax.swing.JTextField txtNW;
     private javax.swing.JTextField txtNewID;
