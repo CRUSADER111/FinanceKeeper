@@ -11,51 +11,51 @@ package Main;
  */
 public class Account extends FinanceKeeper {
     private double income;
-    private String tfa;
+    private double tfa = 11500.00;
     private String totaltax;
     private String incometax;
     private String natins;
     private String totalduct;
     private String netwage;
     
-    public double getIncome() {
-        String text = Income;
-        income = Double.parseDouble(text);
-        return income;
-    }
-    
     public String getTfa() {
-        tfa = Double.toString(11500.00);
-        return tfa;
+        String tfa1 = Double.toString(tfa);
+        return tfa1;
     }
     
     public String getTotaltax() {
-        String text1 = tfa;
-        double tfa1 = Double.parseDouble(text1);
-        totaltax = income - tfa1;
-        String totaltax1 = Double.parseDouble(totaltax1);
-        
+        income = Double.parseDouble(Income);
+        double totaltax1 = income - tfa;
+        totaltax = Double.toString(totaltax1);
         return totaltax;
     }
     
     public String getIncometax() {
-        incometax = totaltax * 0.2;
+        double totaltax1 = Double.parseDouble(totaltax);
+        double incometax1 = totaltax1 * 0.2;
+        incometax = Double.toString(incometax1);
         return incometax;
     }
     
-    public String getNatins(String a) {
-        a = ((income / 12)- 157)/ 4 * 0.111;
-        natins = Math.round(a*100.0)/100.0;
+    public String getNatins() {
+        double a = ((income / 12)- 157)/ 4 * 0.111;
+        double natins1 = Math.round(a*100.0)/100.0;
+        natins = Double.toString(natins1);
         return natins;
     }
     
     public String getTotalduct() {
-        totalduct = income + natins;
+        double natins1 = Double.parseDouble(natins);
+        double incometax1 = Double.parseDouble(incometax);
+        double totalduct1 = natins1 + incometax1;
+        totalduct = Double.toString(totalduct1);
         return totalduct;
     }
     
     public String getNetwage() {
-        netwage = income - totalduct;
+        double totalduct1 = Double.parseDouble(totalduct);
+        double netwage1 = income - totalduct1;
+        netwage = Double.toString(netwage1);
         return netwage;
     }
 }

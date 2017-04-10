@@ -10,7 +10,7 @@ package Utilities;
  * @author Vanilla
  */
 public class SQLDetails {
-    public static final String URL = "jdbc:mysql://localhost/supportdb";
+    public static final String URL = "jdbc:mysql://localhost/financedb";
     public static final String USER = "root";
     public static final String PASS = "";
 }

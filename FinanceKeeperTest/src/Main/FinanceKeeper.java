@@ -55,13 +55,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
         bgAED = new javax.swing.ButtonGroup();
         pMain = new javax.swing.JPanel();
-        pNewLogin = new javax.swing.JPanel();
-        lblNewLogin = new javax.swing.JLabel();
-        txtNewID = new javax.swing.JTextField();
-        pfNewPassword = new javax.swing.JPasswordField();
-        pfCheckPassword = new javax.swing.JPasswordField();
-        btnSubmitL = new javax.swing.JButton();
-        lblpwError = new javax.swing.JLabel();
         pLogin = new javax.swing.JPanel();
         pnlAccLogin = new javax.swing.JPanel();
         lblLoginTitle = new javax.swing.JLabel();
@@ -70,6 +63,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         lblNewAcc = new javax.swing.JLabel();
+        pNewLogin = new javax.swing.JPanel();
+        lblNewLogin = new javax.swing.JLabel();
+        txtNewID = new javax.swing.JTextField();
+        pfNewPassword = new javax.swing.JPasswordField();
+        pfCheckPassword = new javax.swing.JPasswordField();
+        btnSubmitL = new javax.swing.JButton();
+        lblpwError = new javax.swing.JLabel();
         pHome = new javax.swing.JPanel();
         lblOverview = new javax.swing.JLabel();
         pnlStatistics = new javax.swing.JPanel();
@@ -144,105 +144,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pMain.setLayout(new java.awt.CardLayout());
-
-        lblNewLogin.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        lblNewLogin.setText("New Login");
-
-        txtNewID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNewID.setForeground(java.awt.Color.gray);
-        txtNewID.setText("Enter your chosen ID...");
-        txtNewID.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNewIDFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNewIDFocusLost(evt);
-            }
-        });
-        txtNewID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtNewIDKeyReleased(evt);
-            }
-        });
-
-        pfNewPassword.setText("Password");
-        pfNewPassword.setToolTipText("Enter your chosen password...");
-        pfNewPassword.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                pfNewPasswordFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                pfNewPasswordFocusLost(evt);
-            }
-        });
-
-        pfCheckPassword.setText("Password");
-        pfCheckPassword.setToolTipText("Please retype your password...");
-        pfCheckPassword.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                pfCheckPasswordFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                pfCheckPasswordFocusLost(evt);
-            }
-        });
-
-        btnSubmitL.setText("Submit");
-        btnSubmitL.setEnabled(false);
-        btnSubmitL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitLActionPerformed(evt);
-            }
-        });
-
-        lblpwError.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblpwError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout pNewLoginLayout = new javax.swing.GroupLayout(pNewLogin);
-        pNewLogin.setLayout(pNewLoginLayout);
-        pNewLoginLayout.setHorizontalGroup(
-            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pNewLoginLayout.createSequentialGroup()
-                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pNewLoginLayout.createSequentialGroup()
-                        .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pNewLoginLayout.createSequentialGroup()
-                                .addGap(294, 294, 294)
-                                .addComponent(lblNewLogin))
-                            .addGroup(pNewLoginLayout.createSequentialGroup()
-                                .addGap(316, 316, 316)
-                                .addComponent(btnSubmitL))
-                            .addGroup(pNewLoginLayout.createSequentialGroup()
-                                .addGap(273, 273, 273)
-                                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNewID, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                    .addComponent(pfNewPassword)
-                                    .addComponent(pfCheckPassword))))
-                        .addGap(0, 285, Short.MAX_VALUE))
-                    .addGroup(pNewLoginLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblpwError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        pNewLoginLayout.setVerticalGroup(
-            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pNewLoginLayout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(lblNewLogin)
-                .addGap(46, 46, 46)
-                .addComponent(txtNewID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(pfCheckPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(btnSubmitL)
-                .addGap(18, 18, 18)
-                .addComponent(lblpwError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-
-        pMain.add(pNewLogin, "pNewLogin");
 
         lblLoginTitle.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblLoginTitle.setText("Finance Keeper Login");
@@ -357,6 +258,105 @@ public class FinanceKeeper extends javax.swing.JFrame {
         );
 
         pMain.add(pLogin, "pLogin");
+
+        lblNewLogin.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lblNewLogin.setText("New Login");
+
+        txtNewID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNewID.setForeground(java.awt.Color.gray);
+        txtNewID.setText("Enter your chosen ID...");
+        txtNewID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNewIDFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNewIDFocusLost(evt);
+            }
+        });
+        txtNewID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNewIDKeyReleased(evt);
+            }
+        });
+
+        pfNewPassword.setText("Password");
+        pfNewPassword.setToolTipText("Enter your chosen password...");
+        pfNewPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pfNewPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pfNewPasswordFocusLost(evt);
+            }
+        });
+
+        pfCheckPassword.setText("Password");
+        pfCheckPassword.setToolTipText("Please retype your password...");
+        pfCheckPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pfCheckPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pfCheckPasswordFocusLost(evt);
+            }
+        });
+
+        btnSubmitL.setText("Submit");
+        btnSubmitL.setEnabled(false);
+        btnSubmitL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitLActionPerformed(evt);
+            }
+        });
+
+        lblpwError.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblpwError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout pNewLoginLayout = new javax.swing.GroupLayout(pNewLogin);
+        pNewLogin.setLayout(pNewLoginLayout);
+        pNewLoginLayout.setHorizontalGroup(
+            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pNewLoginLayout.createSequentialGroup()
+                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pNewLoginLayout.createSequentialGroup()
+                        .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pNewLoginLayout.createSequentialGroup()
+                                .addGap(294, 294, 294)
+                                .addComponent(lblNewLogin))
+                            .addGroup(pNewLoginLayout.createSequentialGroup()
+                                .addGap(316, 316, 316)
+                                .addComponent(btnSubmitL))
+                            .addGroup(pNewLoginLayout.createSequentialGroup()
+                                .addGap(273, 273, 273)
+                                .addGroup(pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNewID, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(pfNewPassword)
+                                    .addComponent(pfCheckPassword))))
+                        .addGap(0, 285, Short.MAX_VALUE))
+                    .addGroup(pNewLoginLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblpwError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pNewLoginLayout.setVerticalGroup(
+            pNewLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pNewLoginLayout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addComponent(lblNewLogin)
+                .addGap(46, 46, 46)
+                .addComponent(txtNewID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(pfCheckPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnSubmitL)
+                .addGap(18, 18, 18)
+                .addComponent(lblpwError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        pMain.add(pNewLogin, "pNewLogin");
 
         lblOverview.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblOverview.setText("Overview");
@@ -1096,11 +1096,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
         try{
             CardLayout card = (CardLayout)pMain.getLayout();
             int flag  = 1;
-            Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/FinanceDB", "GateKeeper", "EyeOfSauron");
-            Statement state = conn.createStatement();
-            ResultSet res = state.executeQuery("Select ID, PASSWORD from LOGIN");
-            while(res.next()) {
-                if(res.getString(1).equals(txtUserID.getText()) && res.getString(2).equals(pfPassword.getText())) {
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            String sql = "Select AccountID, Password from accounts";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()) {
+                if(rs.getString(1).equals(txtUserID.getText()) && rs.getString(2).equals(pfPassword.getText())) {
                     flag = 0;
                     break;
                 }
@@ -1178,12 +1179,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-            String Accid = txtUserID.getText();
+//            String Accid = txtUserID.getText();
+            String Accid = "4545";
             String sql = "SELECT * FROM `accounts` WHERE `AccountID` =?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, Accid);
             rs = pst.executeQuery();
-            Account acc = new Account();
             if (rs.next()) {
                 String ID = rs.getString("AccountID");
                 txtAccID.setText(ID);
@@ -1200,7 +1201,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 String INC = rs.getString("Income");
                 txtIncome.setText(INC);
                 txtIncome.setForeground(Color.black);
-                Income = txtIncome.getText();
+                conn.close();
+                pst.close();
             } else {
                 JOptionPane.showMessageDialog(null, "Record does not exist");
             }
@@ -1210,9 +1212,16 @@ public class FinanceKeeper extends javax.swing.JFrame {
         }
         Account Acc = new Account();
         txtTFA.setText(Acc.getTfa());
-        txtTT.setText(Acc.getTotaltax());
+        txtTFA.setForeground(Color.black);
+//        txtTT.setText(Acc.getTotaltax());
+//        txtTT.setForeground(Color.black);
+//        txtIT.setText(Acc.getIncometax());
+//        txtNI.setText(Acc.getNatins());
+//        txtTD.setText(Acc.getTotalduct());
+//        txtNW.setText(Acc.getNetwage());
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pAccounts");
+        mNav.setEnabled(true);
         miHome.setEnabled(true);
         miAccounts.setEnabled(false);
         miUtilities.setEnabled(true);
