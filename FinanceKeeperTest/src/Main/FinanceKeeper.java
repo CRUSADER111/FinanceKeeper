@@ -10,15 +10,32 @@ import java.awt.Color;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import Utilities.SQLDetails;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 /**
  *
  * @author Alex
  */
 public class FinanceKeeper extends javax.swing.JFrame {
+    Connection conn;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    static String password = "";
+    String Income;
     
+    ArrayList<String> user_raw = new ArrayList<>();
+    String[] userid = new String[user_raw.size()];
+    
+    public static String hashme() {
+
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        return hashed;
+    }
     /**
      * Creates new form FinanceKeeper
      */
@@ -142,6 +159,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 txtNewIDFocusLost(evt);
             }
         });
+        txtNewID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNewIDKeyReleased(evt);
+            }
+        });
 
         pfNewPassword.setText("Password");
         pfNewPassword.setToolTipText("Enter your chosen password...");
@@ -167,6 +189,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
         btnSubmitL.setText("Submit");
         btnSubmitL.setEnabled(false);
+        btnSubmitL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitLActionPerformed(evt);
+            }
+        });
 
         lblpwError.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblpwError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -713,8 +740,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
         });
         spUtilities.setViewportView(tblUtilities);
 
+        txtItemName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtItemName.setForeground(java.awt.Color.gray);
         txtItemName.setText("Enter Item Name...");
 
+        txtItemValue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtItemValue.setForeground(java.awt.Color.gray);
         txtItemValue.setText("Enter Item Value...");
 
         cbBillingCycle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a Billing Cycle...", "N/A", "1 Month", "3 Month", "4 Month", "Annual" }));
@@ -823,10 +854,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblExpenses.setText("Expenses");
 
         txtExpName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtExpName.setText("Enter the Expense name...");
+        txtExpName.setForeground(java.awt.Color.gray);
+        txtExpName.setText("Enter Expense name...");
 
         txtExpValue.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtExpValue.setText("Enter the Value of the Expense...");
+        txtExpValue.setForeground(java.awt.Color.gray);
+        txtExpValue.setText("Enter Expense Value...");
 
         bgAED.add(rbAddE);
         rbAddE.setText("Add Details");
@@ -1006,7 +1039,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void miAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAboutActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Version: v1.0"+"\n"+"Created By: Alex Morrison", "About", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(FinanceKeeper.this, "Version: v1.0"+"\n"+"Created By: Alex Morrison", "About", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_miAboutActionPerformed
 
     private void miUtilitiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUtilitiesActionPerformed
@@ -1143,6 +1176,41 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void btnAccountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountsActionPerformed
         // TODO add your handling code here:
+        try {
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            String Accid = txtUserID.getText();
+            String sql = "SELECT * FROM `accounts` WHERE `AccountID` =?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, Accid);
+            rs = pst.executeQuery();
+            Account acc = new Account();
+            if (rs.next()) {
+                String ID = rs.getString("AccountID");
+                txtAccID.setText(ID);
+                txtAccID.setForeground(Color.black);
+                String FN = rs.getString("Forename");
+                txtForename.setText(FN);
+                txtForename.setForeground(Color.black);
+                String LN = rs.getString("Surname");
+                txtSurname.setText(LN);
+                txtSurname.setForeground(Color.black);
+                String EM = rs.getString("Email");
+                txtEmail.setText(EM);
+                txtEmail.setForeground(Color.black);
+                String INC = rs.getString("Income");
+                txtIncome.setText(INC);
+                txtIncome.setForeground(Color.black);
+                Income = txtIncome.getText();
+            } else {
+                JOptionPane.showMessageDialog(null, "Record does not exist");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Account Acc = new Account();
+        txtTFA.setText(Acc.getTfa());
+        txtTT.setText(Acc.getTotaltax());
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pAccounts");
         miHome.setEnabled(true);
@@ -1286,6 +1354,34 @@ public class FinanceKeeper extends javax.swing.JFrame {
             btnSubmitL.setEnabled(false);
         }
     }//GEN-LAST:event_pfCheckPasswordFocusLost
+
+    private void txtNewIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewIDKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtNewIDKeyReleased
+
+    private void btnSubmitLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitLActionPerformed
+        // TODO add your handling code here:
+        try {
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            pst = conn.prepareStatement("SELECT * FROM accounts;");
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                user_raw.add(rs.getString("AccountID"));
+            }
+
+            userid = user_raw.toArray(userid);
+
+            pst.close();
+            conn.close();
+            password = pfNewPassword.getText();
+            hashme();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSubmitLActionPerformed
 
     /**
      * @param args the command line arguments
