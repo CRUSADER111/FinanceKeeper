@@ -25,11 +25,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     static String password = "";
-    String Income;
+    String Income = "";
     
     ArrayList<String> user_raw = new ArrayList<>();
     String[] userid = new String[user_raw.size()];
-    
+    /**
+     * Password encryption function
+     */
     public static String hashme() {
 
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -42,6 +44,26 @@ public class FinanceKeeper extends javax.swing.JFrame {
     public FinanceKeeper() {
         initComponents();
         mNav.enable(false);
+    }
+    
+    public void setFields() {
+        txtUserID.setText("Enter User ID...");
+        txtUserID.setForeground(Color.gray);
+        pfPassword.setText("Password");
+        txtIncome.setText("Income...");
+        txtIncome.setForeground(Color.gray);
+        txtTFA.setText("Tax Free Allowance...");
+        txtTFA.setForeground(Color.gray);
+        txtTT.setText("Total Taxable...");
+        txtTT.setForeground(Color.gray);
+        txtIT.setText("Income Tax...");
+        txtIT.setForeground(Color.gray);
+        txtNI.setText("National Insurance...");
+        txtNI.setForeground(Color.gray);
+        txtTD.setText("Total Deductions...");
+        txtTD.setForeground(Color.gray);
+        txtNW.setText("Net Wage...");
+        txtNW.setForeground(Color.gray);
     }
 
     /**
@@ -99,12 +121,19 @@ public class FinanceKeeper extends javax.swing.JFrame {
         rbDelete = new javax.swing.JRadioButton();
         btnSubmit = new javax.swing.JButton();
         pnlIncome = new javax.swing.JPanel();
+        lblIncome = new javax.swing.JLabel();
         txtIncome = new javax.swing.JTextField();
+        lblTaxFreeAllowance = new javax.swing.JLabel();
         txtTFA = new javax.swing.JTextField();
+        lblTotalTax = new javax.swing.JLabel();
         txtTT = new javax.swing.JTextField();
+        lblIncomeTax = new javax.swing.JLabel();
         txtIT = new javax.swing.JTextField();
+        lblNationalInsurance = new javax.swing.JLabel();
         txtNI = new javax.swing.JTextField();
+        lblTotalDeductions = new javax.swing.JLabel();
         txtTD = new javax.swing.JTextField();
+        lblNetWage = new javax.swing.JLabel();
         txtNW = new javax.swing.JTextField();
         pUtilities = new javax.swing.JPanel();
         lblUtilities = new javax.swing.JLabel();
@@ -619,35 +648,56 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
         pnlIncome.setPreferredSize(new java.awt.Dimension(187, 45));
 
+        lblIncome.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblIncome.setText("Income");
+
         txtIncome.setEditable(false);
         txtIncome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIncome.setForeground(java.awt.Color.gray);
         txtIncome.setText("Income...");
+
+        lblTaxFreeAllowance.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTaxFreeAllowance.setText("Tax Free Allowance");
 
         txtTFA.setEditable(false);
         txtTFA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTFA.setForeground(java.awt.Color.gray);
         txtTFA.setText("Tax Free Allowance...");
 
+        lblTotalTax.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTotalTax.setText("Total Taxable");
+
         txtTT.setEditable(false);
         txtTT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTT.setForeground(java.awt.Color.gray);
         txtTT.setText("Total Taxable...");
+
+        lblIncomeTax.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblIncomeTax.setText("Income Tax");
 
         txtIT.setEditable(false);
         txtIT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIT.setForeground(java.awt.Color.gray);
         txtIT.setText("Income Tax...");
 
+        lblNationalInsurance.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblNationalInsurance.setText("National Insurance (N.I.Cs)");
+
         txtNI.setEditable(false);
         txtNI.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNI.setForeground(java.awt.Color.gray);
         txtNI.setText("National Insurance...");
 
+        lblTotalDeductions.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTotalDeductions.setText("Total Deductions");
+
         txtTD.setEditable(false);
         txtTD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTD.setForeground(java.awt.Color.gray);
         txtTD.setText("Total Deductions...");
+
+        lblNetWage.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblNetWage.setText("Net Wage");
 
         txtNW.setEditable(false);
         txtNW.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -661,33 +711,54 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(pnlIncomeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIncomeTax, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTotalTax, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTaxFreeAllowance, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIncome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtIncome)
                     .addComponent(txtTFA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                     .addComponent(txtTT)
                     .addComponent(txtIT)
                     .addComponent(txtNI)
                     .addComponent(txtTD)
-                    .addComponent(txtNW))
+                    .addComponent(txtNW)
+                    .addComponent(lblNationalInsurance, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTotalDeductions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNetWage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlIncomeLayout.setVerticalGroup(
             pnlIncomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlIncomeLayout.createSequentialGroup()
+            .addGroup(pnlIncomeLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lblIncome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTaxFreeAllowance)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTFA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTotalTax)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblIncomeTax)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNationalInsurance)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTotalDeductions)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNetWage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pAccountsLayout = new javax.swing.GroupLayout(pAccounts);
@@ -1080,6 +1151,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void miLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLogoutActionPerformed
         // TODO add your handling code here:
+        setFields();
         mNav.setEnabled(false);
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pLogin");
@@ -1103,6 +1175,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
             while(rs.next()) {
                 if(rs.getString(1).equals(txtUserID.getText()) && rs.getString(2).equals(pfPassword.getText())) {
                     flag = 0;
+                    conn.close();
+                    rs.close();
                     break;
                 }
             }
@@ -1110,11 +1184,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 mNav.setEnabled(true);
                 card.show(pMain, "pHome");
                 miHome.setEnabled(false);
-                txtUserID.setText("");
-                pfPassword.setText("");
                 btnLogin.setEnabled(false);
             }else {
-                JOptionPane.showMessageDialog(null, "Login Error"+"\n"+"Reason: The User ID and/or Password was incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(FinanceKeeper.this, "Login Error"+"\n"+"Reason: The User ID and/or Password was incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
         }catch(SQLException e) {
             e.printStackTrace();
@@ -1178,9 +1250,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private void btnAccountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountsActionPerformed
         // TODO add your handling code here:
         try {
+            Account Acc = new Account();
             conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-//            String Accid = txtUserID.getText();
-            String Accid = "4545";
+            String Accid = txtUserID.getText();
+//            String Accid = "4545";
             String sql = "SELECT * FROM `accounts` WHERE `AccountID` =?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, Accid);
@@ -1201,24 +1274,33 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 String INC = rs.getString("Income");
                 txtIncome.setText(INC);
                 txtIncome.setForeground(Color.black);
+                if(!txtIncome.getText().equals("")) {
+                    Income = txtIncome.getText();
+                    txtTFA.setText(Acc.getTfa());
+                    txtTFA.setForeground(Color.black);
+                    txtTT.setText(Acc.getTotaltax(Income));
+                    txtTT.setForeground(Color.black);
+                    txtIT.setText(Acc.getIncometax());
+                    txtIT.setForeground(Color.black);
+                    txtNI.setText(Acc.getNatins());
+                    txtNI.setForeground(Color.black);
+                    txtTD.setText(Acc.getTotalduct());
+                    txtTD.setForeground(Color.black);
+                    txtNW.setText(Acc.getNetwage());
+                    txtNW.setForeground(Color.black);
+                }else {
+                    txtIncome.setText("Income...");
+                    txtIncome.setForeground(Color.gray);
+                }
                 conn.close();
                 pst.close();
             } else {
-                JOptionPane.showMessageDialog(null, "Record does not exist");
+                JOptionPane.showMessageDialog(FinanceKeeper.this, "Record does not exist");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Account Acc = new Account();
-        txtTFA.setText(Acc.getTfa());
-        txtTFA.setForeground(Color.black);
-//        txtTT.setText(Acc.getTotaltax());
-//        txtTT.setForeground(Color.black);
-//        txtIT.setText(Acc.getIncometax());
-//        txtNI.setText(Acc.getNatins());
-//        txtTD.setText(Acc.getTotalduct());
-//        txtNW.setText(Acc.getNetwage());
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pAccounts");
         mNav.setEnabled(true);
@@ -1250,6 +1332,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        setFields();
         mNav.setEnabled(false);
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pLogin");
@@ -1445,14 +1528,21 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JLabel lblExpReturn;
     private javax.swing.JLabel lblExpenses;
     private javax.swing.JLabel lblExpensesTitle;
+    private javax.swing.JLabel lblIncome;
     private javax.swing.JLabel lblIncomeReturn;
+    private javax.swing.JLabel lblIncomeTax;
     private javax.swing.JLabel lblIncomeTitle;
     private javax.swing.JLabel lblLoginTitle;
+    private javax.swing.JLabel lblNationalInsurance;
+    private javax.swing.JLabel lblNetWage;
     private javax.swing.JLabel lblNewAcc;
     private javax.swing.JLabel lblNewLogin;
     private javax.swing.JLabel lblOverview;
     private javax.swing.JLabel lblSavedReturn;
     private javax.swing.JLabel lblSavedTitle;
+    private javax.swing.JLabel lblTaxFreeAllowance;
+    private javax.swing.JLabel lblTotalDeductions;
+    private javax.swing.JLabel lblTotalTax;
     private javax.swing.JLabel lblUtilities;
     private javax.swing.JLabel lblUtilityReturn;
     private javax.swing.JLabel lblUtilityTitle;

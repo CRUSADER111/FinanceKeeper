@@ -893,9 +893,13 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblIncomeTax" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTotalTax" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTaxFreeAllowance" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblIncome" alignment="1" max="32767" attributes="0"/>
                               <Component id="txtIncome" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtTFA" alignment="1" pref="217" max="32767" attributes="0"/>
                               <Component id="txtTT" alignment="0" max="32767" attributes="0"/>
@@ -903,6 +907,9 @@
                               <Component id="txtNI" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtTD" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtNW" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblNationalInsurance" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTotalDeductions" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblNetWage" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -910,27 +917,49 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblIncome" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtIncome" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblTaxFreeAllowance" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtTFA" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblTotalTax" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtTT" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblIncomeTax" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtIT" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblNationalInsurance" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtNI" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblTotalDeductions" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtTD" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblNetWage" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtNW" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="109" max="32767" attributes="0"/>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblIncome">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Income"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JTextField" name="txtIncome">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
@@ -941,6 +970,14 @@
                       <Color blue="80" green="80" id="gray" palette="1" red="80" type="palette"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Income..."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblTaxFreeAllowance">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Tax Free Allowance"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtTFA">
@@ -955,6 +992,14 @@
                     <Property name="text" type="java.lang.String" value="Tax Free Allowance..."/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="lblTotalTax">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Total Taxable"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JTextField" name="txtTT">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
@@ -965,6 +1010,14 @@
                       <Color blue="80" green="80" id="gray" palette="1" red="80" type="palette"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Total Taxable..."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblIncomeTax">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Income Tax"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtIT">
@@ -979,6 +1032,14 @@
                     <Property name="text" type="java.lang.String" value="Income Tax..."/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="lblNationalInsurance">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="National Insurance (N.I.Cs)"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JTextField" name="txtNI">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
@@ -991,6 +1052,14 @@
                     <Property name="text" type="java.lang.String" value="National Insurance..."/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="lblTotalDeductions">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Total Deductions"/>
+                  </Properties>
+                </Component>
                 <Component class="javax.swing.JTextField" name="txtTD">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
@@ -1001,6 +1070,14 @@
                       <Color blue="80" green="80" id="gray" palette="1" red="80" type="palette"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Total Deductions..."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblNetWage">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Net Wage"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtNW">

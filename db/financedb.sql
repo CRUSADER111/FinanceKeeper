@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2017 at 05:37 PM
+-- Generation Time: Apr 11, 2017 at 05:29 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -34,6 +34,14 @@ CREATE TABLE `accounts` (
   `Email` varchar(40) NOT NULL,
   `Income` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`AccountID`, `Password`, `Forename`, `Surname`, `Email`, `Income`) VALUES
+(4545, 'aaa', 'Alex', 'Morrison', 'asmorrison@hotmail.co.uk', '10000.0'),
+(4646, 'aaa', 'Alex', 'Test', 'test@gmail.com', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -23,22 +23,32 @@ public class Account extends FinanceKeeper {
         return tfa1;
     }
     
-    public String getTotaltax() {
+    public String getTotaltax(String Income) {
         income = Double.parseDouble(Income);
+        if(income > tfa) {
         double totaltax1 = income - tfa;
         totaltax = Double.toString(totaltax1);
+        }else {
+            double totaltax1 = 0.0;
+            totaltax = Double.toString(totaltax1);
+        }
         return totaltax;
     }
     
     public String getIncometax() {
         double totaltax1 = Double.parseDouble(totaltax);
+        if(totaltax1 != 0.0) {
         double incometax1 = totaltax1 * 0.2;
         incometax = Double.toString(incometax1);
+        }else {
+            double incometax1 = 0.0;
+            incometax = Double.toString(incometax1);
+        }
         return incometax;
     }
     
     public String getNatins() {
-        double a = ((income / 12)- 157)/ 4 * 0.111;
+        double a = (income - (8060+157)) * 0.12;
         double natins1 = Math.round(a*100.0)/100.0;
         natins = Double.toString(natins1);
         return natins;
