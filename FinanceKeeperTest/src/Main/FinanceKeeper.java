@@ -49,6 +49,14 @@ public class FinanceKeeper extends javax.swing.JFrame {
         mNav.enable(false);
     }
     
+    public void refreshTables() {
+        DefaultTableModel modelE = (DefaultTableModel) tblExpenses.getModel();
+        DefaultTableModel modelU = (DefaultTableModel) tblUtilities.getModel();
+        modelE.setRowCount(0);
+        modelU.setRowCount(0);
+        Show_In_Utility_Table();
+    }
+    
     public void setFields() {
         txtUserID.setText("Enter User ID...");
         txtUserID.setForeground(Color.gray);
@@ -67,6 +75,22 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtTD.setForeground(Color.gray);
         txtNW.setText("Net Wage...");
         txtNW.setForeground(Color.gray);
+    }
+    
+    public void addReset() {
+        txtExpense.setText("Enter Expense Name...");
+        txtExpense.setForeground(Color.gray);
+        txtExpValue.setText("Enter Expense Value...");
+        txtExpValue.setForeground(Color.gray);
+        ((JTextField)dcExpenses.getDateEditor().getUiComponent()).setText("Select Date Added...");
+        txtUtilityID.setText("ID...");
+        txtUtilityID.setForeground(Color.gray);
+        txtUtility.setText("Enter Utility Name...");
+        txtUtility.setForeground(Color.gray);
+        txtUtilityValue.setText("Enter Utility Value...");
+        txtUtilityValue.setForeground(Color.gray);
+        ((JTextField)dcUtilities.getDateEditor().getUiComponent()).setText("Select Date Added...");
+        cbBillingCycle.setSelectedIndex(0);
     }
     
     public void homeReset() {
@@ -122,7 +146,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         return utilityList;
     }
 
-    public void Show_In_Expense_Table() {
+    public void Show_In_Utility_Table() {
         ArrayList<Utility> list = getUtilityList();
         DefaultTableModel model = (DefaultTableModel) tblUtilities.getModel();
         Object[] row = new Object[5];
@@ -145,7 +169,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bgAED = new javax.swing.ButtonGroup();
+        bgAEDA = new javax.swing.ButtonGroup();
+        bgAEDU = new javax.swing.ButtonGroup();
+        bgAEDE = new javax.swing.ButtonGroup();
         pMain = new javax.swing.JPanel();
         pLogin = new javax.swing.JPanel();
         pnlAccLogin = new javax.swing.JPanel();
@@ -186,9 +212,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtForename = new javax.swing.JTextField();
         txtSurname = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        rbAdd = new javax.swing.JRadioButton();
-        rbEdit = new javax.swing.JRadioButton();
-        rbDelete = new javax.swing.JRadioButton();
+        rbAddA = new javax.swing.JRadioButton();
+        rbEditA = new javax.swing.JRadioButton();
+        rbDeleteA = new javax.swing.JRadioButton();
         btnSubmit = new javax.swing.JButton();
         btnHomeA = new javax.swing.JButton();
         pnlIncome = new javax.swing.JPanel();
@@ -666,14 +692,14 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtEmail.setForeground(java.awt.Color.gray);
         txtEmail.setText("Email...");
 
-        bgAED.add(rbAdd);
-        rbAdd.setText("Add Details");
+        bgAEDA.add(rbAddA);
+        rbAddA.setText("Add Details");
 
-        bgAED.add(rbEdit);
-        rbEdit.setText("Edit Details");
+        bgAEDA.add(rbEditA);
+        rbEditA.setText("Edit Details");
 
-        bgAED.add(rbDelete);
-        rbDelete.setText("Delete Account");
+        bgAEDA.add(rbDeleteA);
+        rbDeleteA.setText("Delete Account");
 
         btnSubmit.setText("Submit");
 
@@ -703,9 +729,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccDetailsLayout.createSequentialGroup()
                                 .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(rbDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(rbDeleteA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(rbEditA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(rbAddA, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(57, 57, 57)
                                 .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(95, 95, 95))
@@ -727,11 +753,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addGroup(pnlAccDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlAccDetailsLayout.createSequentialGroup()
-                        .addComponent(rbAdd)
+                        .addComponent(rbAddA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rbEdit)
+                        .addComponent(rbEditA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rbDelete))
+                        .addComponent(rbDeleteA))
                     .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnHomeA, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -947,7 +973,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         cbBillingCycle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a Billing Cycle...", "N/A", "1 Month", "3 Month", "4 Month", "Annual" }));
         cbBillingCycle.setToolTipText("If it is not a set cycle then select N/A.");
 
-        bgAED.add(rbAddU);
+        bgAEDU.add(rbAddU);
         rbAddU.setText("Add Item");
         rbAddU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -955,7 +981,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             }
         });
 
-        bgAED.add(rbEditU);
+        bgAEDU.add(rbEditU);
         rbEditU.setText("Edit Item");
         rbEditU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -963,7 +989,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             }
         });
 
-        bgAED.add(rbDeleteU);
+        bgAEDU.add(rbDeleteU);
         rbDeleteU.setText("Delete Item");
         rbDeleteU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -989,14 +1015,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtUtilityID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtUtilityID.setForeground(java.awt.Color.gray);
         txtUtilityID.setText("ID...");
-        txtUtilityID.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtUtilityIDFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtUtilityIDFocusLost(evt);
-            }
-        });
 
         javax.swing.GroupLayout pUtilDetailsLayout = new javax.swing.GroupLayout(pUtilDetails);
         pUtilDetails.setLayout(pUtilDetailsLayout);
@@ -1132,14 +1150,14 @@ public class FinanceKeeper extends javax.swing.JFrame {
             }
         });
 
-        bgAED.add(rbAddE);
-        rbAddE.setText("Add Details");
+        bgAEDE.add(rbAddE);
+        rbAddE.setText("Add Item");
 
-        bgAED.add(rbEditE);
-        rbEditE.setText("Edit Details");
+        bgAEDE.add(rbEditE);
+        rbEditE.setText("Edit Item");
 
-        bgAED.add(rbDeleteE);
-        rbDeleteE.setText("Delete Account");
+        bgAEDE.add(rbDeleteE);
+        rbDeleteE.setText("Delete Item");
 
         btnSubmitE.setText("Submit");
 
@@ -1576,7 +1594,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void btnUtilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUtilityActionPerformed
         // TODO add your handling code here:
-        Show_In_Expense_Table();
+        Show_In_Utility_Table();
         ((JTextField)dcUtilities.getDateEditor().getUiComponent()).setText("Select Date Added...");
         ((JTextField)dcUtilities.getDateEditor().getUiComponent()).setToolTipText("Set the date when the Utility was added | Format: dd-MMM-yyyy");
         CardLayout card = (CardLayout)pMain.getLayout();
@@ -1853,10 +1871,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 pst.setString(5, ((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
                 pst.execute();
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Added");
+                refreshTables();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
-
+        
         } else if (rbEditU.isSelected()) {
             try {
                 String string = txtUtilityValue.getText();
@@ -1871,10 +1890,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 pst.setString(5, txtUtilityID.getText());
                 pst.execute();
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Updated");
+                refreshTables();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
-        } else if (rbDelete.isSelected()) {
+            
+        } else if (rbDeleteU.isSelected()) {
             try {
                 conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
                 String sql = "DELETE FROM utilities WHERE UtilityID=?";
@@ -1882,14 +1903,18 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 pst.setString(1, txtUtilityID.getText());
                 pst.execute();
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Deleted");
+                refreshTables();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
+        } else {
+            JOptionPane.showMessageDialog(FinanceKeeper.this, "No Option Selected");
         }
     }//GEN-LAST:event_btnSubmitUActionPerformed
 
     private void rbAddUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAddUActionPerformed
         // TODO add your handling code here:
+        addReset();
         txtUtility.setEditable(true);
         txtUtilityValue.setEditable(true);
     }//GEN-LAST:event_rbAddUActionPerformed
@@ -1905,14 +1930,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtUtility.setEditable(false);
         txtUtilityValue.setEditable(false);
     }//GEN-LAST:event_rbDeleteUActionPerformed
-
-    private void txtUtilityIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUtilityIDFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUtilityIDFocusGained
-
-    private void txtUtilityIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUtilityIDFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUtilityIDFocusLost
 
     /**
      * @param args the command line arguments
@@ -1950,7 +1967,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup bgAED;
+    private javax.swing.ButtonGroup bgAEDA;
+    private javax.swing.ButtonGroup bgAEDE;
+    private javax.swing.ButtonGroup bgAEDU;
     private javax.swing.JButton btnAccounts;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnExit1;
@@ -2019,13 +2038,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JPanel pnlIncome;
     private javax.swing.JPanel pnlOptions;
     private javax.swing.JPanel pnlStatistics;
-    private javax.swing.JRadioButton rbAdd;
+    private javax.swing.JRadioButton rbAddA;
     private javax.swing.JRadioButton rbAddE;
     private javax.swing.JRadioButton rbAddU;
-    private javax.swing.JRadioButton rbDelete;
+    private javax.swing.JRadioButton rbDeleteA;
     private javax.swing.JRadioButton rbDeleteE;
     private javax.swing.JRadioButton rbDeleteU;
-    private javax.swing.JRadioButton rbEdit;
+    private javax.swing.JRadioButton rbEditA;
     private javax.swing.JRadioButton rbEditE;
     private javax.swing.JRadioButton rbEditU;
     private javax.swing.JScrollPane spExpenses;

@@ -2,7 +2,11 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="bgAED">
+    <Component class="javax.swing.ButtonGroup" name="bgAEDA">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="bgAEDU">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="bgAEDE">
     </Component>
     <Menu class="javax.swing.JMenuBar" name="mbMenuBar">
       <SubComponents>
@@ -770,9 +774,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="rbDelete" max="32767" attributes="0"/>
-                                              <Component id="rbEdit" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="rbAdd" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
+                                              <Component id="rbDeleteA" max="32767" attributes="0"/>
+                                              <Component id="rbEditA" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="rbAddA" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                                           <Component id="btnSubmit" min="-2" pref="110" max="-2" attributes="0"/>
@@ -802,11 +806,11 @@
                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="rbAdd" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rbAddA" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rbEdit" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rbEditA" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rbDelete" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rbDeleteA" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="btnSubmit" max="32767" attributes="0"/>
                           </Group>
@@ -866,26 +870,26 @@
                     <Property name="text" type="java.lang.String" value="Email..."/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="rbAdd">
+                <Component class="javax.swing.JRadioButton" name="rbAddA">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDA"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Add Details"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="rbEdit">
+                <Component class="javax.swing.JRadioButton" name="rbEditA">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDA"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Edit Details"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="rbDelete">
+                <Component class="javax.swing.JRadioButton" name="rbDeleteA">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDA"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Delete Account"/>
                   </Properties>
@@ -1339,7 +1343,7 @@
                 <Component class="javax.swing.JRadioButton" name="rbAddU">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDU"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Add Item"/>
                   </Properties>
@@ -1350,7 +1354,7 @@
                 <Component class="javax.swing.JRadioButton" name="rbEditU">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDU"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Edit Item"/>
                   </Properties>
@@ -1361,7 +1365,7 @@
                 <Component class="javax.swing.JRadioButton" name="rbDeleteU">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDU"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Delete Item"/>
                   </Properties>
@@ -1398,10 +1402,6 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="ID..."/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUtilityIDFocusGained"/>
-                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtUtilityIDFocusLost"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1592,25 +1592,25 @@
                 <Component class="javax.swing.JRadioButton" name="rbAddE">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDE"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Add Details"/>
+                    <Property name="text" type="java.lang.String" value="Add Item"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="rbEditE">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDE"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Edit Details"/>
+                    <Property name="text" type="java.lang.String" value="Edit Item"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="rbDeleteE">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="bgAED"/>
+                      <ComponentRef name="bgAEDE"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Delete Account"/>
+                    <Property name="text" type="java.lang.String" value="Delete Item"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSubmitE">
