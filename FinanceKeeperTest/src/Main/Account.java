@@ -48,9 +48,14 @@ public class Account extends FinanceKeeper {
     }
     
     public String getNatins() {
-        double a = (income - (8060+157)) * 0.12;
-        double natins1 = Math.round(a*100.0)/100.0;
-        natins = Double.toString(natins1);
+        if(income > 8060) {
+            double a = (income - (8060+157)) * 0.12;
+            double natins1 = Math.round(a*100.0)/100.0;
+            natins = Double.toString(natins1);
+        } else {
+            double natins1 = 0.0;
+            natins = Double.toString(natins1);
+        }
         return natins;
     }
     
