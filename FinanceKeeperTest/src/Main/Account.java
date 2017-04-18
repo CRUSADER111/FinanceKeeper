@@ -69,8 +69,13 @@ public class Account extends FinanceKeeper {
     
     public String getNetwage() {
         double totalduct1 = Double.parseDouble(totalduct);
-        double netwage1 = income - totalduct1;
-        netwage = Double.toString(netwage1);
+        if(totalduct1 > 0) {
+            double netwage1 = income - totalduct1;
+            netwage = Double.toString(netwage1);
+        }else {
+            double netwage1 = income;
+            netwage = Double.toString(netwage1);
+        }
         return netwage;
     }
 }

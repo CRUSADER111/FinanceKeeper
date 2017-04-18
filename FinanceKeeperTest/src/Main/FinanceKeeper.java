@@ -802,6 +802,16 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtIncome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIncome.setForeground(java.awt.Color.gray);
         txtIncome.setText("Income...");
+        txtIncome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtIncomeFocusLost(evt);
+            }
+        });
+        txtIncome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtIncomeMouseClicked(evt);
+            }
+        });
 
         lblTaxFreeAllowance.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTaxFreeAllowance.setText("Tax Free Allowance");
@@ -1410,7 +1420,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 String INC = rs.getString("Income");
                 txtIncome.setText(INC);
                 txtIncome.setForeground(Color.black);
-                if(!txtIncome.getText().equals("")) {
+                if(!txtIncome.getText().equals("£")) {
                     Income = txtIncome.getText();
                     txtTFA.setText(Acc.getTfa());
                     txtTFA.setForeground(Color.black);
@@ -1585,7 +1595,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 String INC = rs.getString("Income");
                 txtIncome.setText("£"+INC);
                 txtIncome.setForeground(Color.black);
-                if(!txtIncome.getText().equals("") || !txtIncome.getText().equals("£")) {
+                if(!txtIncome.getText().equals("£")) {
                     String string2 = txtIncome.getText();
                     string2 = string2.substring(1);
                     Income = string2;
@@ -1904,38 +1914,66 @@ public class FinanceKeeper extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (rbAddU.isSelected()) {
             try {
-                String string = txtUtilityValue.getText();
-                string = string.substring(1);
-                conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-                String sql = "INSERT INTO utilities (AccountID, Utility, Value, BillingCycle, DateAdded) VALUES (?, ?, ?, ?, ?)";
-                pst = conn.prepareStatement(sql);
-                pst.setString(1, txtUserID.getText());
-                pst.setString(2, txtUtility.getText());
-                pst.setString(3, string);
-                pst.setString(4, cbBillingCycle.getSelectedItem().toString());
-                pst.setString(5, ((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
-                pst.execute();
-                JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Added");
-                refreshTables();
+                Pattern regexN = Pattern.compile("[0-9]");
+                Pattern regexL = Pattern.compile("[a-zA-Z]");
+                Pattern DateCheck = Pattern.compile("^\\d{2}-[a-zA-Z]{3}-\\d{4}$");
+                Matcher matcherD = DateCheck.matcher(((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
+                Matcher matcher = regexN.matcher(txtUtility.getText());
+                Matcher matcherU = regexL.matcher(txtUtilityValue.getText());
+                if(matcher.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only letters");
+                }else if(matcherU.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers");
+                }else if(!matcherD.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter the correct date format");
+                }else {
+                    String string = txtUtilityValue.getText();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                    string = string.substring(1);
+                    conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+                    String sql = "INSERT INTO utilities (AccountID, Utility, Value, BillingCycle, DateAdded) VALUES (?, ?, ?, ?, ?)";
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1, txtUserID.getText());
+                    pst.setString(2, txtUtility.getText());
+                    pst.setString(3, string);
+                    pst.setString(4, cbBillingCycle.getSelectedItem().toString());
+                    pst.setString(5, ((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
+                    pst.execute();
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Added");
+                    refreshTables();
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
         
         } else if (rbEditU.isSelected()) {
             try {
-                String string = txtUtilityValue.getText();
-                string = string.substring(1);
-                conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-                String sql = "UPDATE utilities SET Utility=?, Value=?, BillingCycle=?, DateAdded=? WHERE UtilityID=?";
-                pst = conn.prepareStatement(sql);
-                pst.setString(1, txtUtility.getText());
-                pst.setString(2, string);
-                pst.setString(3, cbBillingCycle.getSelectedItem().toString());
-                pst.setString(4, ((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
-                pst.setString(5, txtUtilityID.getText());
-                pst.execute();
-                JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Updated");
-                refreshTables();
+                Pattern regexN = Pattern.compile("[0-9]");
+                Pattern regexL = Pattern.compile("[a-zA-Z]");
+                Pattern DateCheck = Pattern.compile("^\\d{2}-[a-zA-Z]{3}-\\d{4}$");
+                Matcher matcherD = DateCheck.matcher(((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
+                Matcher matcher = regexN.matcher(txtUtility.getText());
+                Matcher matcherU = regexL.matcher(txtUtilityValue.getText());
+                if(matcher.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only letters");
+                }else if(matcherU.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers");
+                }else if(!matcherD.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter the correct date format");
+                }else {
+                    String string = txtUtilityValue.getText();
+                    string = string.substring(1);
+                    conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+                    String sql = "UPDATE utilities SET Utility=?, Value=?, BillingCycle=?, DateAdded=? WHERE UtilityID=?";
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1, txtUtility.getText());
+                    pst.setString(2, string);
+                    pst.setString(3, cbBillingCycle.getSelectedItem().toString());
+                    pst.setString(4, ((JTextField)dcUtilities.getDateEditor().getUiComponent()).getText());
+                    pst.setString(5, txtUtilityID.getText());
+                    pst.execute();
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Utility Updated");
+                    refreshTables();
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
@@ -1984,34 +2022,64 @@ public class FinanceKeeper extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (rbEditA.isSelected()) {
             try {
-                Account Acc = new Account();
-                String string = txtIncome.getText();
-                string = string.substring(1);
-                conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-                String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=? WHERE AccountID=?";
-                pst = conn.prepareStatement(sql);
-                pst.setString(1, txtForename.getText());
-                pst.setString(2, txtSurname.getText());
-                pst.setString(3, txtEmail.getText());
-                pst.setString(4, string);
-                pst.setString(5, txtAccID.getText());
-                pst.execute();
-                JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
-                String string2 = txtIncome.getText();
-                string2 = string2.substring(1);
-                Income = string2;
-                txtTFA.setText("£"+Acc.getTfa());
-                txtTFA.setForeground(Color.black);
-                txtTT.setText("£"+Acc.getTotaltax(Income));
-                txtTT.setForeground(Color.black);
-                txtIT.setText("£"+Acc.getIncometax());
-                txtIT.setForeground(Color.black);
-                txtNI.setText("£"+Acc.getNatins());
-                txtNI.setForeground(Color.black);
-                txtTD.setText("£"+Acc.getTotalduct());
-                txtTD.setForeground(Color.black);
-                txtNW.setText("£"+Acc.getNetwage());
-                txtNW.setForeground(Color.black);
+                Pattern regex = Pattern.compile("[a-zA-Z]");
+                Pattern regexF = Pattern.compile("[0-9]");
+                Pattern regexS = Pattern.compile("[0-9]");
+                Pattern EmailCheck = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Matcher matcherE = EmailCheck.matcher(txtEmail.getText());
+                Matcher matcher = regex.matcher(txtIncome.getText());
+                Matcher matcherF = regexF.matcher(txtForename.getText());
+                Matcher matcherS = regexS.matcher(txtSurname.getText());
+                if(matcher.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Only use numeric characters");
+                    txtIncome.setForeground(Color.gray);
+                    txtIncome.setText("Income...");
+                }else if(matcherF.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "[F]Only use alphabetic characters");
+                    txtForename.setForeground(Color.gray);
+                    txtForename.setText("Forename...");
+                }else if(matcherS.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "[S]Only use alphabetic characters");
+                    txtForename.setForeground(Color.gray);
+                    txtForename.setText("Surname...");
+                }else if(!matcherE.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Please input a valid email address");
+                }else {
+                    Account Acc = new Account();
+                    String string = txtIncome.getText();
+                    string = string.substring(1);
+                    conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+                    String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=? WHERE AccountID=?";
+                    pst = conn.prepareStatement(sql);
+                    pst.setString(1, txtForename.getText());
+                    pst.setString(2, txtSurname.getText());
+                    pst.setString(3, txtEmail.getText());
+                    pst.setString(4, string);
+                    pst.setString(5, txtAccID.getText());
+                    pst.execute();
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
+                    if(!txtIncome.getText().equals("£")) {
+                        string = txtIncome.getText();
+                        string = string.substring(1);
+                        Income = string;
+                        txtTFA.setText("£"+Acc.getTfa());
+                        txtTFA.setForeground(Color.black);
+                        txtTT.setText("£"+Acc.getTotaltax(Income));
+                        txtTT.setForeground(Color.black);
+                        txtIT.setText("£"+Acc.getIncometax());
+                        txtIT.setForeground(Color.black);
+                        txtNI.setText("£"+Acc.getNatins());
+                        txtNI.setForeground(Color.black);
+                        txtTD.setText("£"+Acc.getTotalduct());
+                        txtTD.setForeground(Color.black);
+                        txtNW.setText("£"+Acc.getNetwage());
+                        txtNW.setForeground(Color.black);
+                    }else {
+                        txtIncome.setText("Income...");
+                        txtIncome.setForeground(Color.gray);
+                        setFields();
+                    }
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
@@ -2024,6 +2092,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 pst.setString(1, txtAccID.getText());
                 pst.execute();
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Deleted");
+                setFields();
+                mNav.setEnabled(false);
+                CardLayout card = (CardLayout)pMain.getLayout();
+                card.show(pMain, "pLogin");
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, e);
             }
@@ -2049,6 +2121,22 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtEmail.setEditable(false);
         txtIncome.setEditable(false);
     }//GEN-LAST:event_rbDeleteAActionPerformed
+
+    private void txtIncomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtIncomeMouseClicked
+        // TODO add your handling code here:
+        if(txtIncome.getText().equals("Income...") || txtIncome.getText().equals("")) {
+            txtIncome.setForeground(Color.black);
+            txtIncome.setText("£");
+        }
+    }//GEN-LAST:event_txtIncomeMouseClicked
+
+    private void txtIncomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIncomeFocusLost
+        // TODO add your handling code here:
+        if(txtIncome.getText().equals("£") || txtIncome.getText().equals("")) {
+            txtIncome.setForeground(Color.gray);
+            txtIncome.setText("Income...");
+        }
+    }//GEN-LAST:event_txtIncomeFocusLost
 
     /**
      * @param args the command line arguments
