@@ -31,14 +31,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
     ResultSet rs = null;
     static String password = "";
     String Income = "";
+    String TaxFree = "";
     
-    ArrayList<String> user_raw = new ArrayList<>();
-    String[] userid = new String[user_raw.size()];
     /**
      * Password encryption function
      */
     public static String hashme() {
-
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
 
         return hashed;
@@ -421,6 +419,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 txtNewIDFocusLost(evt);
             }
         });
+        txtNewID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNewIDMouseClicked(evt);
+            }
+        });
         txtNewID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNewIDKeyReleased(evt);
@@ -437,6 +440,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 pfNewPasswordFocusLost(evt);
             }
         });
+        pfNewPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pfNewPasswordKeyReleased(evt);
+            }
+        });
 
         pfCheckPassword.setText("Password");
         pfCheckPassword.setToolTipText("Please retype your password...");
@@ -446,6 +454,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 pfCheckPasswordFocusLost(evt);
+            }
+        });
+        pfCheckPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pfCheckPasswordKeyReleased(evt);
             }
         });
 
@@ -1420,10 +1433,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 String INC = rs.getString("Income");
                 txtIncome.setText(INC);
                 txtIncome.setForeground(Color.black);
+                String TFA = rs.getString("TaxFree");
+                txtTFA.setText(TFA);
+                txtTFA.setForeground(Color.black);
                 if(!txtIncome.getText().equals("£")) {
                     Income = txtIncome.getText();
-                    txtTFA.setText(Acc.getTfa());
-                    txtTFA.setForeground(Color.black);
+                    TaxFree = txtTFA.getText();
                     txtTT.setText(Acc.getTotaltax(Income));
                     txtTT.setForeground(Color.black);
                     txtIT.setText(Acc.getIncometax());
@@ -1437,6 +1452,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 }else {
                     txtIncome.setText("Income...");
                     txtIncome.setForeground(Color.gray);
+                    txtTFA.setText("Tax Free Allowance...");
+                    txtTFA.setForeground(Color.gray);
                 }
                 conn.close();
                 pst.close();
@@ -1495,7 +1512,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             while(rs.next()) {
-                if(rs.getString(1).equals(txtUserID.getText()) && rs.getString(2).equals(pfPassword.getText())) {
+                if(rs.getString(1).equals(txtUserID.getText()) && BCrypt.checkpw(new String(pfPassword.getPassword()), rs.getString(2))) {
                     flag = 0;
                     conn.close();
                     rs.close();
@@ -1595,12 +1612,16 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 String INC = rs.getString("Income");
                 txtIncome.setText("£"+INC);
                 txtIncome.setForeground(Color.black);
+                String TFA = rs.getString("TaxFree");
+                txtTFA.setText("£"+TFA);
+                txtTFA.setForeground(Color.black);
                 if(!txtIncome.getText().equals("£")) {
                     String string2 = txtIncome.getText();
+                    String string3 = txtTFA.getText();
                     string2 = string2.substring(1);
+                    string3 = string3.substring(1);
                     Income = string2;
-                    txtTFA.setText("£"+Acc.getTfa());
-                    txtTFA.setForeground(Color.black);
+                    TaxFree = string3;
                     txtTT.setText("£"+Acc.getTotaltax(Income));
                     txtTT.setForeground(Color.black);
                     txtIT.setText("£"+Acc.getIncometax());
@@ -1674,36 +1695,16 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private void txtNewIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNewIDFocusGained
         // TODO add your handling code here:
         if(txtNewID.getText().equals("Enter your chosen ID...")) {
-            txtNewID.setText("");
             txtNewID.setForeground(Color.black);
+            txtNewID.setText("");
         }
     }//GEN-LAST:event_txtNewIDFocusGained
 
     private void txtNewIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNewIDFocusLost
         // TODO add your handling code here:
-        if(txtNewID.getText().equals("")) {
-            txtNewID.setText("Enter your chosen ID...");
+        if(txtNewID.getText().equals("") || txtNewID.getText().equals(" ")) {
             txtNewID.setForeground(Color.gray);
-        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
-            lblpwError.setText("");
-            pfNewPassword.setForeground(Color.green);
-            pfCheckPassword.setForeground(Color.green);
-            btnSubmitL.setEnabled(true);
-        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
-            pfNewPassword.setForeground(Color.red);
-            pfCheckPassword.setForeground(Color.red);
-            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
-            btnSubmitL.setEnabled(false);
-        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
-            pfNewPassword.setForeground(Color.red);
-            pfCheckPassword.setForeground(Color.red);
-            lblpwError.setText("Passwords do not match!");
-            btnSubmitL.setEnabled(false);
-        }else {
-            pfNewPassword.setForeground(Color.green);
-            pfCheckPassword.setForeground(Color.green);
-            lblpwError.setText("Please enter a valid Account ID!");
-            btnSubmitL.setEnabled(false);
+            txtNewID.setText("Enter your chosen ID...");
         }
     }//GEN-LAST:event_txtNewIDFocusLost
 
@@ -1716,28 +1717,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void pfNewPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfNewPasswordFocusLost
         // TODO add your handling code here:
-        if(pfNewPassword.getText().equals("")) {
+        if(pfNewPassword.getText().equals("") || pfNewPassword.getText().equals(" ")) {
             pfNewPassword.setText("Password");
-        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
-            lblpwError.setText("");
-            pfNewPassword.setForeground(Color.green);
-            pfCheckPassword.setForeground(Color.green);
-            btnSubmitL.setEnabled(true);
-        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
-            pfNewPassword.setForeground(Color.red);
-            pfCheckPassword.setForeground(Color.red);
-            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
-            btnSubmitL.setEnabled(false);
-        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
-            pfNewPassword.setForeground(Color.red);
-            pfCheckPassword.setForeground(Color.red);
-            lblpwError.setText("Passwords do not match!");
-            btnSubmitL.setEnabled(false);
-        }else {
-            pfNewPassword.setForeground(Color.green);
-            pfCheckPassword.setForeground(Color.green);
-            lblpwError.setText("Please enter a valid Account ID!");
-            btnSubmitL.setEnabled(false);
         }
     }//GEN-LAST:event_pfNewPasswordFocusLost
 
@@ -1750,62 +1731,56 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void pfCheckPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfCheckPasswordFocusLost
         // TODO add your handling code here:
-        if(pfCheckPassword.getText().equals("")) {
+        if(pfCheckPassword.getText().equals("") || pfCheckPassword.getText().equals(" ")) {
             pfCheckPassword.setText("Password");
-        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
-            lblpwError.setText("");
-            pfNewPassword.setForeground(Color.green);
-            pfCheckPassword.setForeground(Color.green);
-            btnSubmitL.setEnabled(true);
-        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
-            pfNewPassword.setForeground(Color.red);
-            pfCheckPassword.setForeground(Color.red);
-            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
-            btnSubmitL.setEnabled(false);
-        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
-            pfNewPassword.setForeground(Color.red);
-            pfCheckPassword.setForeground(Color.red);
-            lblpwError.setText("Passwords do not match!");
-            btnSubmitL.setEnabled(false);
-        }else {
-            pfNewPassword.setForeground(Color.green);
-            pfCheckPassword.setForeground(Color.green);
-            lblpwError.setText("Please enter a valid Account ID!");
-            btnSubmitL.setEnabled(false);
         }
     }//GEN-LAST:event_pfCheckPasswordFocusLost
-
-    private void txtNewIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewIDKeyReleased
-        // TODO add your handling code here:
-        String string = txtNewID.getText();
-        while(Pattern.matches("[a-zA-Z]", string)) {
-            JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers");
-            delete_last_char_java();
-            break;
-        }
-        
-    }//GEN-LAST:event_txtNewIDKeyReleased
 
     private void btnSubmitLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitLActionPerformed
         // TODO add your handling code here:
         try {
-            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-            pst = conn.prepareStatement("SELECT * FROM accounts;");
-            rs = pst.executeQuery();
-
-            while (rs.next()) {
-                user_raw.add(rs.getString("AccountID"));
+            Pattern AccountCheck = Pattern.compile("^\\d{4}$");
+            Matcher AccountMatch = AccountCheck.matcher(txtNewID.getText());
+            int flag = 0;
+            if(AccountMatch.find()) {
+                conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+                String sql = "SELECT AccountID FROM accounts";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                
+                while (rs.next()) {
+                    if(rs.getString(1).equals(txtNewID.getText())) {
+                        JOptionPane.showMessageDialog(FinanceKeeper.this, "Account ID already in use!"+"\n"+"Choose another to Continue.");
+                        break;
+                    }else {
+                        flag = 1;
+                        rs.close();
+                        pst.close();
+                        //conn.close();
+                        break;
+                    }
+                }
+                if(flag == 1) {
+                    password = pfNewPassword.getText();
+                    String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+                    
+                    pst = conn.prepareStatement("INSERT INTO accounts (AccountID, Password) VALUES (?, ?)");
+                    pst.setString(1, txtNewID.getText());
+                    pst.setString(2, hashed);
+                    pst.execute();
+                    pst.close();
+                    conn.close();
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Created");
+                }
+            }else {
+                JOptionPane.showMessageDialog(FinanceKeeper.this, "Only a Min/Max length of 4 numbers is allowed");
             }
-
-            userid = user_raw.toArray(userid);
-
-            pst.close();
-            conn.close();
-            password = pfNewPassword.getText();
-            hashme();
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            if(e.toString().equals("com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '"+txtNewID.getText()+"' for key 'PRIMARY'")) {
+                JOptionPane.showMessageDialog(FinanceKeeper.this, "Account ID already in use!"+"\n"+"Choose another to Continue.");
+            }else {
+                JOptionPane.showMessageDialog(FinanceKeeper.this, e);
+            }
         }
     }//GEN-LAST:event_btnSubmitLActionPerformed
 
@@ -1926,6 +1901,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers");
                 }else if(!matcherD.find()) {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter the correct date format");
+                }else if(cbBillingCycle.getSelectedItem().toString().equals("Choose a Billing Cycle...")) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Choose a Billing Cycle");
                 }else {
                     String string = txtUtilityValue.getText();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                     string = string.substring(1);
@@ -1959,6 +1936,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers");
                 }else if(!matcherD.find()) {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter the correct date format");
+                }else if(cbBillingCycle.getSelectedItem().toString().equals("Choose a Billing Cycle...")) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Choose a Billing Cycle");
                 }else {
                     String string = txtUtilityValue.getText();
                     string = string.substring(1);
@@ -2031,39 +2010,37 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 Matcher matcherF = regexF.matcher(txtForename.getText());
                 Matcher matcherS = regexS.matcher(txtSurname.getText());
                 if(matcher.find()) {
-                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Only use numeric characters");
-                    txtIncome.setForeground(Color.gray);
-                    txtIncome.setText("Income...");
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers for Income");
                 }else if(matcherF.find()) {
-                    JOptionPane.showMessageDialog(FinanceKeeper.this, "[F]Only use alphabetic characters");
-                    txtForename.setForeground(Color.gray);
-                    txtForename.setText("Forename...");
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Use only letters for the Forename");
                 }else if(matcherS.find()) {
-                    JOptionPane.showMessageDialog(FinanceKeeper.this, "[S]Only use alphabetic characters");
-                    txtForename.setForeground(Color.gray);
-                    txtForename.setText("Surname...");
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Use only letters for the Surname");
                 }else if(!matcherE.find()) {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Please input a valid email address");
                 }else {
                     Account Acc = new Account();
                     String string = txtIncome.getText();
+                    String string2 = txtTFA.getText();
                     string = string.substring(1);
+                    string2 = string2.substring(1);
                     conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-                    String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=? WHERE AccountID=?";
+                    String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=?, TaxFree=? WHERE AccountID=?";
                     pst = conn.prepareStatement(sql);
                     pst.setString(1, txtForename.getText());
                     pst.setString(2, txtSurname.getText());
                     pst.setString(3, txtEmail.getText());
                     pst.setString(4, string);
-                    pst.setString(5, txtAccID.getText());
+                    pst.setString(5, string2);
+                    pst.setString(6, txtAccID.getText());
                     pst.execute();
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
                     if(!txtIncome.getText().equals("£")) {
                         string = txtIncome.getText();
+                        string2 = txtTFA.getText();
                         string = string.substring(1);
+                        string2 = string2.substring(1);
                         Income = string;
-                        txtTFA.setText("£"+Acc.getTfa());
-                        txtTFA.setForeground(Color.black);
+                        TaxFree = string2;
                         txtTT.setText("£"+Acc.getTotaltax(Income));
                         txtTT.setForeground(Color.black);
                         txtIT.setText("£"+Acc.getIncometax());
@@ -2077,6 +2054,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     }else {
                         txtIncome.setText("Income...");
                         txtIncome.setForeground(Color.gray);
+                        txtTFA.setText("Tax Free Allowance...");
+                        txtTFA.setForeground(Color.gray);
                         setFields();
                     }
                 }
@@ -2106,11 +2085,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
 
     private void rbEditAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbEditAActionPerformed
         // TODO add your handling code here:
-        txtAccID.setEditable(true);
         txtForename.setEditable(true);
         txtSurname.setEditable(true);
         txtEmail.setEditable(true);
         txtIncome.setEditable(true);
+        txtTFA.setEditable(true);
     }//GEN-LAST:event_rbEditAActionPerformed
 
     private void rbDeleteAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDeleteAActionPerformed
@@ -2137,6 +2116,96 @@ public class FinanceKeeper extends javax.swing.JFrame {
             txtIncome.setText("Income...");
         }
     }//GEN-LAST:event_txtIncomeFocusLost
+
+    private void txtNewIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewIDKeyReleased
+        // TODO add your handling code here:
+        if(txtNewID.getText().equals("")) {
+            txtNewID.setText("Enter your chosen ID...");
+            txtNewID.setForeground(Color.gray);
+        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
+            lblpwError.setText("");
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            btnSubmitL.setEnabled(true);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else {
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            lblpwError.setText("Please enter a valid Account ID!");
+            btnSubmitL.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtNewIDKeyReleased
+
+    private void pfNewPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pfNewPasswordKeyReleased
+        // TODO add your handling code here:
+        if(pfNewPassword.getText().equals("")) {
+            pfNewPassword.setText("Password");
+        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
+            lblpwError.setText("");
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            btnSubmitL.setEnabled(true);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else {
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            lblpwError.setText("Please enter a valid Account ID!");
+            btnSubmitL.setEnabled(false);
+        }
+    }//GEN-LAST:event_pfNewPasswordKeyReleased
+
+    private void pfCheckPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pfCheckPasswordKeyReleased
+        // TODO add your handling code here:
+        if(pfCheckPassword.getText().equals("")) {
+            pfCheckPassword.setText("Password");
+        }else if(pfCheckPassword.getText().equals(pfNewPassword.getText()) && !txtNewID.getText().equals(" ") && !txtNewID.getText().equals("Enter your chosen ID...")) {
+            lblpwError.setText("");
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            btnSubmitL.setEnabled(true);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText()) && txtNewID.getText().equals("Enter your chosen ID...") || txtNewID.getText().equals(" ")) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Please enter a valid Account ID! Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else if(!pfCheckPassword.getText().equals(pfNewPassword.getText())) {
+            pfNewPassword.setForeground(Color.red);
+            pfCheckPassword.setForeground(Color.red);
+            lblpwError.setText("Passwords do not match!");
+            btnSubmitL.setEnabled(false);
+        }else {
+            pfNewPassword.setForeground(Color.green);
+            pfCheckPassword.setForeground(Color.green);
+            lblpwError.setText("Please enter a valid Account ID!");
+            btnSubmitL.setEnabled(false);
+        }
+    }//GEN-LAST:event_pfCheckPasswordKeyReleased
+
+    private void txtNewIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNewIDMouseClicked
+        // TODO add your handling code here:
+        if(txtNewID.getText().equals("Enter your chosen ID...")) {
+            txtNewID.setForeground(Color.black);
+            txtNewID.setText("");
+        }
+    }//GEN-LAST:event_txtNewIDMouseClicked
 
     /**
      * @param args the command line arguments

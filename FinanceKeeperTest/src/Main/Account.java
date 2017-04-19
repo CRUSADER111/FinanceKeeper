@@ -11,20 +11,16 @@ package Main;
  */
 public class Account extends FinanceKeeper {
     private double income;
-    private double tfa = 11500.00;
+    private double tfa;
     private String totaltax;
     private String incometax;
     private String natins;
     private String totalduct;
     private String netwage;
     
-    public String getTfa() {
-        String tfa1 = Double.toString(tfa);
-        return tfa1;
-    }
-    
     public String getTotaltax(String Income) {
         income = Double.parseDouble(Income);
+        tfa = Double.parseDouble(TaxFree);
         if(income > tfa) {
         double totaltax1 = income - tfa;
         totaltax = Double.toString(totaltax1);
