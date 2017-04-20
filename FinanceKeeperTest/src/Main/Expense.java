@@ -1,0 +1,40 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Main;
+
+/**
+ *
+ * @author Vanilla
+ */
+public class Expense {
+    private String id;
+    private String expense;
+    private String value;
+    private String dateadded;
+    
+    public Expense(String id, String expense, String value, String dateadded) {
+        this.id = id;
+        this.expense = expense;
+        this.value = value;
+        this.dateadded = dateadded;
+    }
+    
+    public String getID() {
+        return id;
+    }
+    
+    public String getExpense() {
+        return expense;
+    }
+    
+    public String getValue() {
+        return value;
+    }
+    
+    public String getDateAdded() {
+        return dateadded;
+    }
+}

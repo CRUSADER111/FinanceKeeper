@@ -11,14 +11,14 @@ package Main;
  */
 public class Utility {
     private String id;
-    private String expense;
+    private String utility;
     private String value;
     private String billingcycle;
     private String dateadded;
     
-    public Utility(String id, String expense, String value, String billingcycle, String dateadded) {
+    public Utility(String id, String utility, String value, String billingcycle, String dateadded) {
         this.id = id;
-        this.expense = expense;
+        this.utility = utility;
         this.value = value;
         this.billingcycle = billingcycle;
         this.dateadded = dateadded;
@@ -28,8 +28,8 @@ public class Utility {
         return id;
     }
     
-    public String getExpense() {
-        return expense;
+    public String getUtility() {
+        return utility;
     }
     
     public String getValue() {

@@ -18,7 +18,7 @@ public class Account extends FinanceKeeper {
     private String totalduct;
     private String netwage;
     
-    public String getTotaltax(String Income) {
+    public String getTotaltax(String Income, String TaxFree) {
         income = Double.parseDouble(Income);
         tfa = Double.parseDouble(TaxFree);
         if(income > tfa) {
