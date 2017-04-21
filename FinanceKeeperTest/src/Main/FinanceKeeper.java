@@ -38,9 +38,19 @@ public class FinanceKeeper extends javax.swing.JFrame {
     static String password = "";
     String Income = "";
     String TaxFree = "";
+    String TT = "";
+    String IT = "";
+    String NI = "";
+    String TD = "";
+    String NW = "";
     String Version = "v1.1";
     String delChar;
     String delChar2;
+    String delChar3;
+    String delChar4;
+    String delChar5;
+    String delChar6;
+    String delChar7;
     
     /**
      * Creates new form FinanceKeeper
@@ -161,6 +171,42 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtTFA.setForeground(Color.gray);
     }
     
+    public void calcMonthly() {
+        Account Acc = new Account();
+        txtIncomeM.setText("£"+Acc.getIncomeM(Income));
+        txtIncomeM.setForeground(Color.black);
+        txtTTM.setText("£"+Acc.getTotaltaxM(TT));
+        txtTTM.setForeground(Color.black);
+        txtITM.setText("£"+Acc.getIncometaxM(IT));
+        txtITM.setForeground(Color.black);
+        txtNIM.setText("£"+Acc.getNatinsM(NI));
+        txtNIM.setForeground(Color.black);
+        txtTDM.setText("£"+Acc.getTotalductM(TD));
+        txtTDM.setForeground(Color.black);
+        txtNWM.setText("£"+Acc.getNetwageM(NW));
+        txtNWM.setForeground(Color.black);
+    }
+    
+    public void delCharF(String a, String b) {
+        delChar = a;
+        Income = delChar.substring(1);
+        delChar2 = b;
+        TaxFree = delChar2.substring(1);
+    }
+    
+    public void delCharS(String a, String b, String c, String d, String e) {
+        delChar3 = a;
+        TT = delChar3.substring(1);
+        delChar4 = b;
+        IT = delChar4.substring(1);
+        delChar5 = c;
+        NI = delChar5.substring(1);
+        delChar6 = d;
+        TD = delChar6.substring(1);
+        delChar7 = e;
+        NW = delChar7.substring(1);
+    }
+    
     /**
      * ArrayList to store table data from the database, specifically for the Utility table.
      * @return 
@@ -241,7 +287,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             model.addRow(row);
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1990,12 +2036,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 txtTFA.setText("£"+TFA);
                 txtTFA.setForeground(Color.black);
                 if(!txtIncome.getText().equals("£") && !txtTFA.getText().equals("£")) {
-                    delChar = txtIncome.getText();
-                    delChar2 = txtTFA.getText();
-                    delChar = delChar.substring(1);
-                    delChar2 = delChar2.substring(1);
-                    Income = delChar;
-                    TaxFree = delChar2;
+                    delCharF(txtIncome.getText(), txtTFA.getText());
                     txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
                     txtTT.setForeground(Color.black);
                     txtIT.setText("£"+Acc.getIncometax());
@@ -2006,6 +2047,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     txtTD.setForeground(Color.black);
                     txtNW.setText("£"+Acc.getNetwage());
                     txtNW.setForeground(Color.black);
+                    delCharS(txtTT.getText(), txtIT.getText(), txtNI.getText(), txtTD.getText(), txtNW.getText());
+                    calcMonthly();
                 }else {
                     noRecord();
                 }
@@ -2042,7 +2085,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUtilityActionPerformed
 
     private void btnExpensesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpensesActionPerformed
-        // TODO add your handling code here:
         this.setTitle("Finance Keeper - Expenses "+Version);
         Show_In_Expense_Table();
         ((JTextField)dcExpenses.getDateEditor().getUiComponent()).setText("Select Date Added...");
@@ -2056,7 +2098,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExpensesActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
         this.setTitle("Finance Keeper - Login "+Version);
         setFields();
         homeReset();
@@ -2067,12 +2108,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit1ActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnExit1ActionPerformed
 
     private void txtNewIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNewIDFocusGained
-        // TODO add your handling code here:
         if(txtNewID.getText().equals("Enter your chosen ID...")) {
             txtNewID.setForeground(Color.black);
             txtNewID.setText("");
@@ -2080,7 +2119,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNewIDFocusGained
 
     private void txtNewIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNewIDFocusLost
-        // TODO add your handling code here:
         if(txtNewID.getText().equals("") || txtNewID.getText().equals(" ")) {
             txtNewID.setForeground(Color.gray);
             txtNewID.setText("Enter your chosen ID...");
@@ -2088,35 +2126,30 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNewIDFocusLost
 
     private void pfNewPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfNewPasswordFocusGained
-        // TODO add your handling code here:
         if(pfNewPassword.getText().equals("Password")) {
             pfNewPassword.setText("");
         }
     }//GEN-LAST:event_pfNewPasswordFocusGained
 
     private void pfNewPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfNewPasswordFocusLost
-        // TODO add your handling code here:
         if(pfNewPassword.getText().equals("") || pfNewPassword.getText().equals(" ")) {
             pfNewPassword.setText("Password");
         }
     }//GEN-LAST:event_pfNewPasswordFocusLost
 
     private void pfCheckPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfCheckPasswordFocusGained
-        // TODO add your handling code here:
         if(pfCheckPassword.getText().equals("Password")) {
             pfCheckPassword.setText("");
         }
     }//GEN-LAST:event_pfCheckPasswordFocusGained
 
     private void pfCheckPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pfCheckPasswordFocusLost
-        // TODO add your handling code here:
         if(pfCheckPassword.getText().equals("") || pfCheckPassword.getText().equals(" ")) {
             pfCheckPassword.setText("Password");
         }
     }//GEN-LAST:event_pfCheckPasswordFocusLost
 
     private void btnSubmitLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitLActionPerformed
-        // TODO add your handling code here:
         try {
             Pattern AccountCheck = Pattern.compile("^\\d{4}$");
             Matcher AccountMatch = AccountCheck.matcher(txtNewID.getText());
@@ -2178,7 +2211,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUtilitiesMouseClicked
 
     private void btnHomeUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeUActionPerformed
-        // TODO add your handling code here:
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
@@ -2187,7 +2219,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeUActionPerformed
 
     private void btnHomeEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeEActionPerformed
-        // TODO add your handling code here:
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
@@ -2196,7 +2227,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeEActionPerformed
 
     private void btnHomeAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeAActionPerformed
-        // TODO add your handling code here:
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
@@ -2205,7 +2235,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeAActionPerformed
 
     private void txtUtilityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUtilityFocusGained
-        // TODO add your handling code here:
         if(txtUtility.getText().equals("Enter Utility Name...")) {
             txtUtility.setForeground(Color.black);
             txtUtility.setText("");
@@ -2213,7 +2242,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUtilityFocusGained
 
     private void txtUtilityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUtilityFocusLost
-        // TODO add your handling code here:
         if(txtUtility.getText().equals("")) {
             txtUtility.setText("Enter Utility Name...");
             txtUtility.setForeground(Color.gray);
@@ -2221,7 +2249,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUtilityFocusLost
 
     private void txtUtilityValueFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUtilityValueFocusGained
-        // TODO add your handling code here:
         if(txtUtilityValue.getText().equals("Enter Utility Value...")) {
             txtUtilityValue.setForeground(Color.black);
             txtUtilityValue.setText("£");
@@ -2229,7 +2256,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUtilityValueFocusGained
 
     private void txtUtilityValueFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUtilityValueFocusLost
-        // TODO add your handling code here:
         if(txtUtilityValue.getText().equals("£") || txtUtilityValue.getText().equals("")) {
             txtUtilityValue.setText("Enter Utility Value...");
             txtUtilityValue.setForeground(Color.gray);
@@ -2237,7 +2263,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUtilityValueFocusLost
 
     private void txtExpenseFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtExpenseFocusGained
-        // TODO add your handling code here:
         if(txtExpense.getText().equals("Enter Expense Name...")) {
             txtExpense.setText("");
             txtExpense.setForeground(Color.black);
@@ -2245,7 +2270,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_txtExpenseFocusGained
 
     private void txtExpenseFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtExpenseFocusLost
-        // TODO add your handling code here:
         if(txtExpense.getText().equals("")) {
             txtExpense.setText("Enter Expense Name...");
             txtExpense.setForeground(Color.gray);
@@ -2433,6 +2457,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         txtTD.setForeground(Color.black);
                         txtNW.setText("£"+Acc.getNetwage());
                         txtNW.setForeground(Color.black);
+                        calcMonthly();
                     }else {
                         txtIncome.setText("Income...");
                         txtIncome.setForeground(Color.gray);
