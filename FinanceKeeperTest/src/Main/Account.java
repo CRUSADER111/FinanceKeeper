@@ -207,10 +207,9 @@ public class Account extends FinanceKeeper {
      * @param roundingMode
      * @return 
      */
-    public static double round(double unrounded, int precision, int roundingMode)
-    {
-    BigDecimal bd = new BigDecimal(unrounded);
-    BigDecimal rounded = bd.setScale(precision, roundingMode);
-    return rounded.doubleValue();
+    public double round(double unrounded, int precision, int roundingMode) {
+        BigDecimal bd = new BigDecimal(unrounded);
+        BigDecimal rounded = bd.setScale(precision, roundingMode);
+        return rounded.doubleValue();
     }
 }

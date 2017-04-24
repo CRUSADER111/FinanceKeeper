@@ -559,8 +559,8 @@
                 <Container class="javax.swing.JPanel" name="pnlStatisticsY">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Annual Household Income" toolTip="Total Income Annually for all accounts collectively">
-                        <Property name="tabTitle" type="java.lang.String" value="Annual Household Income"/>
+                      <JTabbedPaneConstraints tabName="Annual Total Income" toolTip="Total Income Annually for all accounts collectively">
+                        <Property name="tabTitle" type="java.lang.String" value="Annual Total Income"/>
                         <Property name="tabToolTip" type="java.lang.String" value="Total Income Annually for all accounts collectively"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -621,6 +621,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Total Income"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Total Income of ALL Accounts, after tax and deductables"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                             <EtchetBorder/>
@@ -635,6 +636,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Waiting for Total Income Value..."/>
+                        <Property name="toolTipText" type="java.lang.String" value="Total Income of ALL Accounts, after tax and deductables"/>
                         <Property name="horizontalTextPosition" type="int" value="10"/>
                       </Properties>
                     </Component>
@@ -715,8 +717,8 @@
                 <Container class="javax.swing.JPanel" name="pnlStatisticsM">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Monthly Household Income" toolTip="Total Income Monthly for all accounts collectively">
-                        <Property name="tabTitle" type="java.lang.String" value="Monthly Household Income"/>
+                      <JTabbedPaneConstraints tabName="Monthly Total Income" toolTip="Total Income Monthly for all accounts collectively">
+                        <Property name="tabTitle" type="java.lang.String" value="Monthly Total Income"/>
                         <Property name="tabToolTip" type="java.lang.String" value="Total Income Monthly for all accounts collectively"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -777,6 +779,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Total Income"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Total Income of ALL Accounts, after tax and deductables"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                             <EtchetBorder/>
@@ -791,6 +794,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Waiting for Total Income Value..."/>
+                        <Property name="toolTipText" type="java.lang.String" value="Total Income of ALL Accounts, after tax and deductables"/>
                         <Property name="horizontalTextPosition" type="int" value="10"/>
                       </Properties>
                     </Component>
@@ -871,8 +875,8 @@
                 <Container class="javax.swing.JPanel" name="pnlStatisticsQ">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Quarterly Household Income" toolTip="Total Income Quarterly for all accounts collectively">
-                        <Property name="tabTitle" type="java.lang.String" value="Quarterly Household Income"/>
+                      <JTabbedPaneConstraints tabName="Quarterly Total Income" toolTip="Total Income Quarterly for all accounts collectively">
+                        <Property name="tabTitle" type="java.lang.String" value="Quarterly Total Income"/>
                         <Property name="tabToolTip" type="java.lang.String" value="Total Income Quarterly for all accounts collectively"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -933,6 +937,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Total Income"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Total Income of ALL Accounts, after tax and deductables"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                             <EtchetBorder/>
@@ -947,6 +952,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="Waiting for Total Income Value..."/>
+                        <Property name="toolTipText" type="java.lang.String" value="Total Income of ALL Accounts, after tax and deductables"/>
                         <Property name="horizontalTextPosition" type="int" value="10"/>
                       </Properties>
                     </Component>

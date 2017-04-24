@@ -5,13 +5,13 @@ package Main;
  * @author Alex Morrison
  */
 public class TotalIncome {
-    private String income;
+    private String netwage;
     
-    public TotalIncome(String income) {
-        this.income = income;
+    public TotalIncome(String netwage) {
+        this.netwage = netwage;
     }
     
-    public String getIncome() {
-        return income;
+    public String getNetWage() {
+        return netwage;
     }
 }

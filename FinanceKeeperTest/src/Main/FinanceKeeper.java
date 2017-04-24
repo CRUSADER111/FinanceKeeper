@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import Utilities.SQLDetails;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -216,13 +217,17 @@ public class FinanceKeeper extends javax.swing.JFrame {
     /**
      * Function to delete the first character of a String
      * @param a
-     * @param b 
+     * @param b
+     * @param e
      */
-    public void delCharF(String a, String b) {
+    public void delCharF(String a, String b, String e) {
         delChar = a;
         Income = delChar.substring(1);
         delChar2 = b;
         TaxFree = delChar2.substring(1);
+        delChar7 = e;
+        NW = delChar7.substring(1);
+        
     }
     
     /**
@@ -333,14 +338,14 @@ public class FinanceKeeper extends javax.swing.JFrame {
      */
     public ArrayList<TotalIncome> getTotalIncome() {
         ArrayList<TotalIncome> totalIncome = new ArrayList<>();
-        String query = "SELECT Income FROM accounts";
+        String query = "SELECT NetWage FROM accounts";
         try {
             conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery(query);
             TotalIncome totalincome;
             while (rs.next()) {
-                totalincome = new TotalIncome(rs.getString("Income"));
+                totalincome = new TotalIncome(rs.getString("NetWage"));
                 totalIncome.add(totalincome);
             }
         } catch (SQLException e) {
@@ -352,59 +357,41 @@ public class FinanceKeeper extends javax.swing.JFrame {
     /**
      * Use the data stored in the Expense ArrayList and set the data to their
      * correct placement in the table.
+     * @param y
+     * @param m
+     * @param q
      */
-    public void Set_Variables() {
+    public void Set_Totals(int y, int m, int q) {
+        Account acc = new Account();
         ArrayList<TotalIncome> income = getTotalIncome();
         double sum = 0;
         String item;
         for (int i = 0; i < income.size(); i++) {
-            item = income.get(i).getIncome();
-            sum = sum + Double.parseDouble(item);
+            item = income.get(i).getNetWage();
+            if(!item.equals("")) {
+                sum = sum + Double.parseDouble(item);
+            }else {
+                sum = 0.0;
+            } 
         }
-        String total = Double.toString(sum);
-        lblIncomeReturn.setText("£"+total);
-    }
-    
-    public void calcAnnualTotal() {
-        try {
-            Account Acc = new Account();
-            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-            String sql = "SELECT * FROM accounts";
-            pst = conn.prepareStatement(sql);
-            rs = pst.executeQuery(); 
-            if (rs.next()) {
-                String INC = rs.getString("Income");
-                txtIncome.setText("£"+INC);
-                txtIncome.setForeground(Color.black);
-                String TFA = rs.getString("TaxFree");
-                txtTFA.setText("£"+TFA);
-                txtTFA.setForeground(Color.black);
-                if(!txtIncome.getText().equals("£") && !txtTFA.getText().equals("£")) {
-                    delCharF(txtIncome.getText(), txtTFA.getText());
-                    txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
-                    txtTT.setForeground(Color.black);
-                    txtIT.setText("£"+Acc.getIncometax());
-                    txtIT.setForeground(Color.black);
-                    txtNI.setText("£"+Acc.getNatins());
-                    txtNI.setForeground(Color.black);
-                    txtTD.setText("£"+Acc.getTotalduct());
-                    txtTD.setForeground(Color.black);
-                    txtNW.setText("£"+Acc.getNetwage());
-                    txtNW.setForeground(Color.black);
-                    delCharS(txtTT.getText(), txtIT.getText(), txtNI.getText(), txtTD.getText(), txtNW.getText());
-                    calcMonthly();
-                    calcQuarterly();
-                }else {
-                    noRecord();
-                }
-                conn.close();
-                pst.close();
-            } else {
-                JOptionPane.showMessageDialog(FinanceKeeper.this, "Record does not exist");
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(FinanceKeeper.this, e);
+        if(sum != 0.0) {
+            double sumY = sum / y;
+            sumY = acc.round(sumY, 2, BigDecimal.ROUND_HALF_UP);
+            String totalY = Double.toString(sumY);
+            lblIncomeReturn.setText("£"+totalY);
+            double sumM = sum / m;
+            sumM = acc.round(sumM, 2, BigDecimal.ROUND_HALF_UP);
+            String totalM = Double.toString(sumM);
+            lblIncomeReturnM.setText("£"+totalM);
+            double sumQ = sum / q;
+            sumQ = acc.round(sumQ, 2, BigDecimal.ROUND_HALF_UP);
+            String totalQ = Double.toString(sumQ);
+            lblIncomeReturnQ.setText("£"+totalQ);
+        }else {
+            String phI = "Waiting for Total Income Value...";
+            lblIncomeReturn.setText(phI);
+            lblIncomeReturnM.setText(phI);
+            lblIncomeReturnQ.setText(phI);
         }
     }
     
@@ -875,11 +862,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblIncomeTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lblIncomeTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncomeTitle.setText("Total Income");
+        lblIncomeTitle.setToolTipText("Total Income of ALL Accounts, after tax and deductables");
         lblIncomeTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblIncomeReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblIncomeReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncomeReturn.setText("Waiting for Total Income Value...");
+        lblIncomeReturn.setToolTipText("Total Income of ALL Accounts, after tax and deductables");
         lblIncomeReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lblUtilityTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -953,16 +942,18 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tpTotalIncome.addTab("Annual Household Income", null, pnlStatisticsY, "Total Income Annually for all accounts collectively");
+        tpTotalIncome.addTab("Annual Total Income", null, pnlStatisticsY, "Total Income Annually for all accounts collectively");
 
         lblIncomeTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lblIncomeTitleM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncomeTitleM.setText("Total Income");
+        lblIncomeTitleM.setToolTipText("Total Income of ALL Accounts, after tax and deductables");
         lblIncomeTitleM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblIncomeReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblIncomeReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncomeReturnM.setText("Waiting for Total Income Value...");
+        lblIncomeReturnM.setToolTipText("Total Income of ALL Accounts, after tax and deductables");
         lblIncomeReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lblUtilityTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -1036,16 +1027,18 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tpTotalIncome.addTab("Monthly Household Income", null, pnlStatisticsM, "Total Income Monthly for all accounts collectively");
+        tpTotalIncome.addTab("Monthly Total Income", null, pnlStatisticsM, "Total Income Monthly for all accounts collectively");
 
         lblIncomeTitleQ.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lblIncomeTitleQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncomeTitleQ.setText("Total Income");
+        lblIncomeTitleQ.setToolTipText("Total Income of ALL Accounts, after tax and deductables");
         lblIncomeTitleQ.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblIncomeReturnQ.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblIncomeReturnQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIncomeReturnQ.setText("Waiting for Total Income Value...");
+        lblIncomeReturnQ.setToolTipText("Total Income of ALL Accounts, after tax and deductables");
         lblIncomeReturnQ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lblUtilityTitleQ.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -1119,7 +1112,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tpTotalIncome.addTab("Quarterly Household Income", null, pnlStatisticsQ, "Total Income Quarterly for all accounts collectively");
+        tpTotalIncome.addTab("Quarterly Total Income", null, pnlStatisticsQ, "Total Income Quarterly for all accounts collectively");
 
         javax.swing.GroupLayout pHomeLayout = new javax.swing.GroupLayout(pHome);
         pHome.setLayout(pHomeLayout);
@@ -2247,7 +2240,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 card.show(pMain, "pHome");
                 miHome.setEnabled(false);
                 btnLogin.setEnabled(false);
-                Set_Variables();
+                Set_Totals(1, 12, 3);
             }else {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Login Error"+"\n"+"Reason: The User ID and/or Password was incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -2343,7 +2336,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 txtTFA.setText("£"+TFA);
                 txtTFA.setForeground(Color.black);
                 if(!txtIncome.getText().equals("£") && !txtTFA.getText().equals("£")) {
-                    delCharF(txtIncome.getText(), txtTFA.getText());
+                    delCharF(txtIncome.getText(), txtTFA.getText(), txtNW.getText());
                     txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
                     txtTT.setForeground(Color.black);
                     txtIT.setText("£"+Acc.getIncometax());
@@ -2476,7 +2469,6 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         flag = 1;
                         rs.close();
                         pst.close();
-                        //conn.close();
                         break;
                     }
                 }
@@ -2519,6 +2511,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUtilitiesMouseClicked
 
     private void btnHomeUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeUActionPerformed
+        this.setTitle("Finance Keeper - Home "+Version);
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
@@ -2527,6 +2520,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeUActionPerformed
 
     private void btnHomeEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeEActionPerformed
+        this.setTitle("Finance Keeper - Home "+Version);
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
@@ -2535,10 +2529,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeEActionPerformed
 
     private void btnHomeAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeAActionPerformed
+        this.setTitle("Finance Keeper - Home "+Version);
         CardLayout card = (CardLayout)pMain.getLayout();
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
         miAccounts.setEnabled(true);
+        Set_Totals(1, 12, 3);
         homeReset();
     }//GEN-LAST:event_btnHomeAActionPerformed
 
@@ -2733,20 +2729,21 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Please input a valid email address");
                 }else {
                     Account Acc = new Account();
-                    delCharF(txtIncome.getText(), txtTFA.getText());
+                    delCharF(txtIncome.getText(), txtTFA.getText(), txtNW.getText());
                     conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-                    String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=?, TaxFree=? WHERE AccountID=?";
+                    String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=?, TaxFree=?, NetWage=? WHERE AccountID=?";
                     pst = conn.prepareStatement(sql);
                     pst.setString(1, txtForename.getText());
                     pst.setString(2, txtSurname.getText());
                     pst.setString(3, txtEmail.getText());
                     pst.setString(4, Income);
                     pst.setString(5, TaxFree);
-                    pst.setString(6, txtAccID.getText());
+                    pst.setString(6, NW);
+                    pst.setString(7, txtAccID.getText());
                     pst.execute();
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
                     if(!txtIncome.getText().equals("£")) {
-                        delCharF(txtIncome.getText(), txtTFA.getText());
+                        delCharF(txtIncome.getText(), txtTFA.getText(), txtNW.getText());
                         txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
                         txtTT.setForeground(Color.black);
                         txtIT.setText("£"+Acc.getIncometax());
