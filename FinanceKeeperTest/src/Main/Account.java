@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Main;
 
 import java.math.BigDecimal;
 
 /**
  *
- * @author Vanilla
+ * @author Alex Morrison
  */
 public class Account extends FinanceKeeper {
     private double income;
@@ -25,6 +20,12 @@ public class Account extends FinanceKeeper {
     private String totalduct;
     private String netwage;
     
+    /**
+     * Return Functions for Annual calculations.
+     * @param Income
+     * @param TaxFree
+     * @return 
+     */
     public String getTotaltax(String Income, String TaxFree) {
         income = Double.parseDouble(Income);
         tfa = Double.parseDouble(TaxFree);
@@ -91,11 +92,23 @@ public class Account extends FinanceKeeper {
         return netwage;
     }
     
+    /**
+     * Return Functions for Monthly calculations.
+     * @param Income
+     * @return 
+     */
     public String getIncomeM(String Income) {
         income = Double.parseDouble(Income)/12;
         double incomeC = round(income, 2, BigDecimal.ROUND_HALF_UP);
         String incomeM = Double.toString(incomeC);
         return incomeM;
+    }
+    
+    public String getTaxFreeM(String TaxFree) {
+        tfa = Double.parseDouble(TaxFree)/12;
+        double taxfreeC = round(tfa, 0, BigDecimal.ROUND_HALF_UP);
+        String taxfreeM = Double.toString(taxfreeC);
+        return taxfreeM;
     }
     
     public String getTotaltaxM(String TT) {
@@ -133,6 +146,67 @@ public class Account extends FinanceKeeper {
         return netwageM;
     }
     
+    /**
+     * Return Functions for Quarterly calculations.
+     * @param Income
+     * @return 
+     */
+    public String getIncomeQ(String Income) {
+        income = Double.parseDouble(Income)/3;
+        double incomeC = round(income, 2, BigDecimal.ROUND_HALF_UP);
+        String incomeQ = Double.toString(incomeC);
+        return incomeQ;
+    }
+    
+    public String getTaxFreeQ(String TaxFree) {
+        tfa = Double.parseDouble(TaxFree)/3;
+        double taxfreeC = round(tfa, 0, BigDecimal.ROUND_HALF_UP);
+        String taxfreeQ = Double.toString(taxfreeC);
+        return taxfreeQ;
+    }
+    
+    public String getTotaltaxQ(String TT) {
+        tt = Double.parseDouble(TT)/3;
+        double totaltaxC = round(tt, 2, BigDecimal.ROUND_HALF_UP);
+        String totaltaxQ = Double.toString(totaltaxC);
+        return totaltaxQ;
+    }
+    
+    public String getIncometaxQ(String IT) {
+        it = Double.parseDouble(IT)/3;
+        double incometaxC = round(it, 2, BigDecimal.ROUND_HALF_UP);
+        String incometaxQ = Double.toString(incometaxC);
+        return incometaxQ;
+    }
+    
+    public String getNatinsQ(String NI) {
+        ni = Double.parseDouble(NI)/3;
+        double natinsC = round(ni, 2, BigDecimal.ROUND_HALF_UP);
+        String natinsQ = Double.toString(natinsC);
+        return natinsQ;
+    }
+    
+    public String getTotalductQ(String TD) {
+        td = Double.parseDouble(TD)/3;
+        double totalductC = round(td, 2, BigDecimal.ROUND_HALF_UP);
+        String totalductQ = Double.toString(totalductC);
+        return totalductQ;
+    }
+    
+    public String getNetwageQ(String NW) {
+        nw = Double.parseDouble(NW)/3;
+        double netwageC = round(nw, 2, BigDecimal.ROUND_HALF_UP);
+        String netwageQ = Double.toString(netwageC);
+        return netwageQ;
+    }
+    
+    /**
+     * Function to make accurate numbers to a user specified decimal count.
+     * @param unrounded
+     * @param precision
+     * @param roundingMode
+     * @return 
+     */
     public static double round(double unrounded, int precision, int roundingMode)
     {
     BigDecimal bd = new BigDecimal(unrounded);

@@ -171,10 +171,15 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtTFA.setForeground(Color.gray);
     }
     
+    /**
+     * Function to set Monthly fields to the return values of specified functions found in Account.java
+     */
     public void calcMonthly() {
         Account Acc = new Account();
         txtIncomeM.setText("£"+Acc.getIncomeM(Income));
         txtIncomeM.setForeground(Color.black);
+        txtTFAM.setText("£"+Acc.getTaxFreeM(TaxFree));
+        txtTFAM.setForeground(Color.black);
         txtTTM.setText("£"+Acc.getTotaltaxM(TT));
         txtTTM.setForeground(Color.black);
         txtITM.setText("£"+Acc.getIncometaxM(IT));
@@ -187,6 +192,32 @@ public class FinanceKeeper extends javax.swing.JFrame {
         txtNWM.setForeground(Color.black);
     }
     
+    /**
+     * Function to set Quarterly fields to the return values of specified functions found in Account.java
+     */
+    public void calcQuarterly() {
+        Account Acc = new Account();
+        txtIncomeQ.setText("£"+Acc.getIncomeQ(Income));
+        txtIncomeQ.setForeground(Color.black);
+        txtTFAQ.setText("£"+Acc.getTaxFreeQ(TaxFree));
+        txtTFAQ.setForeground(Color.black);
+        txtTTQ.setText("£"+Acc.getTotaltaxQ(TT));
+        txtTTQ.setForeground(Color.black);
+        txtITQ.setText("£"+Acc.getIncometaxQ(IT));
+        txtITQ.setForeground(Color.black);
+        txtNIQ.setText("£"+Acc.getNatinsQ(NI));
+        txtNIQ.setForeground(Color.black);
+        txtTDQ.setText("£"+Acc.getTotalductQ(TD));
+        txtTDQ.setForeground(Color.black);
+        txtNWQ.setText("£"+Acc.getNetwageQ(NW));
+        txtNWQ.setForeground(Color.black);
+    }
+    
+    /**
+     * Function to delete the first character of a String
+     * @param a
+     * @param b 
+     */
     public void delCharF(String a, String b) {
         delChar = a;
         Income = delChar.substring(1);
@@ -194,6 +225,14 @@ public class FinanceKeeper extends javax.swing.JFrame {
         TaxFree = delChar2.substring(1);
     }
     
+    /**
+     * Function to delete the first character of a String
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @param e 
+     */
     public void delCharS(String a, String b, String c, String d, String e) {
         delChar3 = a;
         TT = delChar3.substring(1);
@@ -289,6 +328,87 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }
     
     /**
+     * ArrayList to store table data from the database, specifically for the Expenses table.
+     * @return 
+     */
+    public ArrayList<TotalIncome> getTotalIncome() {
+        ArrayList<TotalIncome> totalIncome = new ArrayList<>();
+        String query = "SELECT Income FROM accounts";
+        try {
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery(query);
+            TotalIncome totalincome;
+            while (rs.next()) {
+                totalincome = new TotalIncome(rs.getString("Income"));
+                totalIncome.add(totalincome);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(FinanceKeeper.this, e);
+        }
+        return totalIncome;
+    }
+    
+    /**
+     * Use the data stored in the Expense ArrayList and set the data to their
+     * correct placement in the table.
+     */
+    public void Set_Variables() {
+        ArrayList<TotalIncome> income = getTotalIncome();
+        double sum = 0;
+        String item;
+        for (int i = 0; i < income.size(); i++) {
+            item = income.get(i).getIncome();
+            sum = sum + Double.parseDouble(item);
+        }
+        String total = Double.toString(sum);
+        lblIncomeReturn.setText("£"+total);
+    }
+    
+    public void calcAnnualTotal() {
+        try {
+            Account Acc = new Account();
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            String sql = "SELECT * FROM accounts";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery(); 
+            if (rs.next()) {
+                String INC = rs.getString("Income");
+                txtIncome.setText("£"+INC);
+                txtIncome.setForeground(Color.black);
+                String TFA = rs.getString("TaxFree");
+                txtTFA.setText("£"+TFA);
+                txtTFA.setForeground(Color.black);
+                if(!txtIncome.getText().equals("£") && !txtTFA.getText().equals("£")) {
+                    delCharF(txtIncome.getText(), txtTFA.getText());
+                    txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
+                    txtTT.setForeground(Color.black);
+                    txtIT.setText("£"+Acc.getIncometax());
+                    txtIT.setForeground(Color.black);
+                    txtNI.setText("£"+Acc.getNatins());
+                    txtNI.setForeground(Color.black);
+                    txtTD.setText("£"+Acc.getTotalduct());
+                    txtTD.setForeground(Color.black);
+                    txtNW.setText("£"+Acc.getNetwage());
+                    txtNW.setForeground(Color.black);
+                    delCharS(txtTT.getText(), txtIT.getText(), txtNI.getText(), txtTD.getText(), txtNW.getText());
+                    calcMonthly();
+                    calcQuarterly();
+                }else {
+                    noRecord();
+                }
+                conn.close();
+                pst.close();
+            } else {
+                JOptionPane.showMessageDialog(FinanceKeeper.this, "Record does not exist");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(FinanceKeeper.this, e);
+        }
+    }
+    
+    /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -318,21 +438,40 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblpwError = new javax.swing.JLabel();
         pHome = new javax.swing.JPanel();
         lblOverview = new javax.swing.JLabel();
-        pnlStatistics = new javax.swing.JPanel();
-        lblUtilityTitle = new javax.swing.JLabel();
-        lblIncomeTitle = new javax.swing.JLabel();
-        lblIncomeReturn = new javax.swing.JLabel();
-        lblUtilityReturn = new javax.swing.JLabel();
-        lblExpensesTitle = new javax.swing.JLabel();
-        lblExpReturn = new javax.swing.JLabel();
-        lblSavedTitle = new javax.swing.JLabel();
-        lblSavedReturn = new javax.swing.JLabel();
         pnlOptions = new javax.swing.JPanel();
         btnAccounts = new javax.swing.JButton();
         btnUtility = new javax.swing.JButton();
         btnExpenses = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnExit1 = new javax.swing.JButton();
+        tpTotalIncome = new javax.swing.JTabbedPane();
+        pnlStatisticsY = new javax.swing.JPanel();
+        lblIncomeTitle = new javax.swing.JLabel();
+        lblIncomeReturn = new javax.swing.JLabel();
+        lblUtilityTitle = new javax.swing.JLabel();
+        lblUtilityReturn = new javax.swing.JLabel();
+        lblExpensesTitle = new javax.swing.JLabel();
+        lblExpReturn = new javax.swing.JLabel();
+        lblSavedTitle = new javax.swing.JLabel();
+        lblSavedReturn = new javax.swing.JLabel();
+        pnlStatisticsM = new javax.swing.JPanel();
+        lblIncomeTitleM = new javax.swing.JLabel();
+        lblIncomeReturnM = new javax.swing.JLabel();
+        lblUtilityTitleM = new javax.swing.JLabel();
+        lblUtilityReturnM = new javax.swing.JLabel();
+        lblExpensesTitleM = new javax.swing.JLabel();
+        lblExpensesReturnM = new javax.swing.JLabel();
+        lblSavedTitleM = new javax.swing.JLabel();
+        lblSavedReturnM = new javax.swing.JLabel();
+        pnlStatisticsQ = new javax.swing.JPanel();
+        lblIncomeTitleQ = new javax.swing.JLabel();
+        lblIncomeReturnQ = new javax.swing.JLabel();
+        lblUtilityTitleQ = new javax.swing.JLabel();
+        lblUtilityReturnQ = new javax.swing.JLabel();
+        lblExpensesTitleQ = new javax.swing.JLabel();
+        lblExpReturnQ = new javax.swing.JLabel();
+        lblSavedTitleQ = new javax.swing.JLabel();
+        lblSavedReturnQ = new javax.swing.JLabel();
         pAccounts = new javax.swing.JPanel();
         lblAccount = new javax.swing.JLabel();
         pnlAccDetails = new javax.swing.JPanel();
@@ -420,7 +559,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         dcExpenses = new com.toedter.calendar.JDateChooser();
         btnHomeE = new javax.swing.JButton();
         mbMenuBar = new javax.swing.JMenuBar();
-        mFile = new javax.swing.JMenu();
+        mAccount = new javax.swing.JMenu();
         miLogout = new javax.swing.JMenuItem();
         miExit = new javax.swing.JMenuItem();
         mNav = new javax.swing.JMenu();
@@ -493,7 +632,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         pnlAccLoginLayout.setHorizontalGroup(
             pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccLoginLayout.createSequentialGroup()
-                .addGap(0, 51, Short.MAX_VALUE)
+                .addGap(0, 57, Short.MAX_VALUE)
                 .addGroup(pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlAccLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccLoginLayout.createSequentialGroup()
@@ -545,7 +684,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(pLoginLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(pnlAccLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
 
         pMain.add(pLogin, "pLogin");
@@ -638,7 +777,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                                     .addComponent(txtNewID, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                                     .addComponent(pfNewPassword)
                                     .addComponent(pfCheckPassword))))
-                        .addGap(0, 285, Short.MAX_VALUE))
+                        .addGap(0, 291, Short.MAX_VALUE))
                     .addGroup(pNewLoginLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblpwError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -659,94 +798,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(btnSubmitL)
                 .addGap(18, 18, 18)
                 .addComponent(lblpwError, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pMain.add(pNewLogin, "pNewLogin");
 
         lblOverview.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblOverview.setText("Overview");
-
-        lblUtilityTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        lblUtilityTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblUtilityTitle.setText("Total Utilities");
-        lblUtilityTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblIncomeTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        lblIncomeTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIncomeTitle.setText("Total Income");
-        lblIncomeTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblIncomeReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblIncomeReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIncomeReturn.setText("Waiting for Total Income Value...");
-        lblIncomeReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        lblUtilityReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblUtilityReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblUtilityReturn.setText("Waiting for Total Utilities Value...");
-        lblUtilityReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        lblExpensesTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        lblExpensesTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpensesTitle.setText("Total Expenses");
-        lblExpensesTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblExpReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblExpReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpReturn.setText("Waiting for Total Expenses Value...");
-        lblExpReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        lblSavedTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        lblSavedTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSavedTitle.setText("Total Saved");
-        lblSavedTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblSavedReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblSavedReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSavedReturn.setText("Waiting for Total Saved Income...");
-        lblSavedReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        javax.swing.GroupLayout pnlStatisticsLayout = new javax.swing.GroupLayout(pnlStatistics);
-        pnlStatistics.setLayout(pnlStatisticsLayout);
-        pnlStatisticsLayout.setHorizontalGroup(
-            pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlStatisticsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSavedReturn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblExpReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlStatisticsLayout.createSequentialGroup()
-                        .addGroup(pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblUtilityTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblIncomeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblExpensesTitle)
-                            .addComponent(lblSavedTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblUtilityReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblIncomeReturn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        pnlStatisticsLayout.setVerticalGroup(
-            pnlStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlStatisticsLayout.createSequentialGroup()
-                .addComponent(lblIncomeTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblIncomeReturn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUtilityTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUtilityReturn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblExpensesTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblExpReturn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSavedTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSavedReturn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         btnAccounts.setMnemonic('A');
         btnAccounts.setText("Accounts");
@@ -811,18 +869,267 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExit1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        lblIncomeTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblIncomeTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIncomeTitle.setText("Total Income");
+        lblIncomeTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblIncomeReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblIncomeReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIncomeReturn.setText("Waiting for Total Income Value...");
+        lblIncomeReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblUtilityTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblUtilityTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUtilityTitle.setText("Total Utilities");
+        lblUtilityTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblUtilityReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblUtilityReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUtilityReturn.setText("Waiting for Total Utilities Value...");
+        lblUtilityReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblExpensesTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblExpensesTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpensesTitle.setText("Total Expenses");
+        lblExpensesTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblExpReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblExpReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpReturn.setText("Waiting for Total Expenses Value...");
+        lblExpReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblSavedTitle.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblSavedTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSavedTitle.setText("Total Saved");
+        lblSavedTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblSavedReturn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblSavedReturn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSavedReturn.setText("Waiting for Total Saved Income...");
+        lblSavedReturn.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        javax.swing.GroupLayout pnlStatisticsYLayout = new javax.swing.GroupLayout(pnlStatisticsY);
+        pnlStatisticsY.setLayout(pnlStatisticsYLayout);
+        pnlStatisticsYLayout.setHorizontalGroup(
+            pnlStatisticsYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlStatisticsYLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlStatisticsYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSavedReturn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblExpReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlStatisticsYLayout.createSequentialGroup()
+                        .addGroup(pnlStatisticsYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUtilityTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIncomeTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblExpensesTitle)
+                            .addComponent(lblSavedTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblUtilityReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIncomeReturn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlStatisticsYLayout.setVerticalGroup(
+            pnlStatisticsYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlStatisticsYLayout.createSequentialGroup()
+                .addComponent(lblIncomeTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblIncomeReturn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilityTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilityReturn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblExpensesTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblExpReturn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSavedTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSavedReturn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        tpTotalIncome.addTab("Annual Household Income", null, pnlStatisticsY, "Total Income Annually for all accounts collectively");
+
+        lblIncomeTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblIncomeTitleM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIncomeTitleM.setText("Total Income");
+        lblIncomeTitleM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblIncomeReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblIncomeReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIncomeReturnM.setText("Waiting for Total Income Value...");
+        lblIncomeReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblUtilityTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblUtilityTitleM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUtilityTitleM.setText("Total Utilities");
+        lblUtilityTitleM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblUtilityReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblUtilityReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUtilityReturnM.setText("Waiting for Total Utilities Value...");
+        lblUtilityReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblExpensesTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblExpensesTitleM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpensesTitleM.setText("Total Expenses");
+        lblExpensesTitleM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblExpensesReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblExpensesReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpensesReturnM.setText("Waiting for Total Expenses Value...");
+        lblExpensesReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblSavedTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblSavedTitleM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSavedTitleM.setText("Total Saved");
+        lblSavedTitleM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblSavedReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblSavedReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSavedReturnM.setText("Waiting for Total Saved Income...");
+        lblSavedReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        javax.swing.GroupLayout pnlStatisticsMLayout = new javax.swing.GroupLayout(pnlStatisticsM);
+        pnlStatisticsM.setLayout(pnlStatisticsMLayout);
+        pnlStatisticsMLayout.setHorizontalGroup(
+            pnlStatisticsMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlStatisticsMLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlStatisticsMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSavedReturnM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblExpensesReturnM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlStatisticsMLayout.createSequentialGroup()
+                        .addGroup(pnlStatisticsMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUtilityTitleM, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIncomeTitleM, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblExpensesTitleM)
+                            .addComponent(lblSavedTitleM, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblUtilityReturnM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIncomeReturnM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlStatisticsMLayout.setVerticalGroup(
+            pnlStatisticsMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlStatisticsMLayout.createSequentialGroup()
+                .addComponent(lblIncomeTitleM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblIncomeReturnM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilityTitleM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilityReturnM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblExpensesTitleM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblExpensesReturnM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSavedTitleM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSavedReturnM)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tpTotalIncome.addTab("Monthly Household Income", null, pnlStatisticsM, "Total Income Monthly for all accounts collectively");
+
+        lblIncomeTitleQ.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblIncomeTitleQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIncomeTitleQ.setText("Total Income");
+        lblIncomeTitleQ.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblIncomeReturnQ.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblIncomeReturnQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIncomeReturnQ.setText("Waiting for Total Income Value...");
+        lblIncomeReturnQ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblUtilityTitleQ.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblUtilityTitleQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUtilityTitleQ.setText("Total Utilities");
+        lblUtilityTitleQ.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblUtilityReturnQ.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblUtilityReturnQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUtilityReturnQ.setText("Waiting for Total Utilities Value...");
+        lblUtilityReturnQ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblExpensesTitleQ.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblExpensesTitleQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpensesTitleQ.setText("Total Expenses");
+        lblExpensesTitleQ.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblExpReturnQ.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblExpReturnQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpReturnQ.setText("Waiting for Total Expenses Value...");
+        lblExpReturnQ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        lblSavedTitleQ.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblSavedTitleQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSavedTitleQ.setText("Total Saved");
+        lblSavedTitleQ.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblSavedReturnQ.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblSavedReturnQ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSavedReturnQ.setText("Waiting for Total Saved Income...");
+        lblSavedReturnQ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+
+        javax.swing.GroupLayout pnlStatisticsQLayout = new javax.swing.GroupLayout(pnlStatisticsQ);
+        pnlStatisticsQ.setLayout(pnlStatisticsQLayout);
+        pnlStatisticsQLayout.setHorizontalGroup(
+            pnlStatisticsQLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlStatisticsQLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlStatisticsQLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSavedReturnQ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblExpReturnQ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlStatisticsQLayout.createSequentialGroup()
+                        .addGroup(pnlStatisticsQLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUtilityTitleQ, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIncomeTitleQ, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblExpensesTitleQ)
+                            .addComponent(lblSavedTitleQ, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblUtilityReturnQ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIncomeReturnQ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlStatisticsQLayout.setVerticalGroup(
+            pnlStatisticsQLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlStatisticsQLayout.createSequentialGroup()
+                .addComponent(lblIncomeTitleQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblIncomeReturnQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilityTitleQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilityReturnQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblExpensesTitleQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblExpReturnQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSavedTitleQ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSavedReturnQ)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tpTotalIncome.addTab("Quarterly Household Income", null, pnlStatisticsQ, "Total Income Quarterly for all accounts collectively");
 
         javax.swing.GroupLayout pHomeLayout = new javax.swing.GroupLayout(pHome);
         pHome.setLayout(pHomeLayout);
         pHomeLayout.setHorizontalGroup(
             pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pHomeLayout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
-                .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblOverview)
-                    .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(122, Short.MAX_VALUE)
+                .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblOverview, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tpTotalIncome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110))
@@ -833,10 +1140,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(lblOverview)
                 .addGap(18, 18, 18)
-                .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tpTotalIncome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pMain.add(pHome, "pHome");
@@ -980,6 +1287,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(btnHomeA, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
+
+        tpIncome.setToolTipText("");
 
         pnlIncomeY.setPreferredSize(new java.awt.Dimension(187, 45));
 
@@ -1249,7 +1558,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        tpIncome.addTab("Monthly", null, pnlIncomeM, "Annual Income Totals");
+        tpIncome.addTab("Monthly", null, pnlIncomeM, "Monthly Income Totals");
 
         pnlIncomeQ.setPreferredSize(new java.awt.Dimension(187, 45));
 
@@ -1384,7 +1693,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        tpIncome.addTab("Quarterly", null, pnlIncomeQ, "Annual Income Totals");
+        tpIncome.addTab("Quarterly", null, pnlIncomeQ, "Quarterly Income Totals");
 
         javax.swing.GroupLayout pAccountsLayout = new javax.swing.GroupLayout(pAccounts);
         pAccounts.setLayout(pAccountsLayout);
@@ -1397,8 +1706,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         .addComponent(pnlAccDetails, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
                     .addGroup(pAccountsLayout.createSequentialGroup()
                         .addGap(308, 308, 308)
-                        .addComponent(lblAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tpIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1598,7 +1906,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addComponent(lblUtilities)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pUtilitiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                    .addComponent(spUtilities, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                     .addGroup(pUtilitiesLayout.createSequentialGroup()
                         .addComponent(pUtilDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -1715,15 +2023,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
             .addGroup(pExpDetailsLayout.createSequentialGroup()
                 .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pExpDetailsLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
                         .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(rbDeleteE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rbEditE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rbAddE, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pExpDetailsLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(pExpDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(rbDeleteE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbEditE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbAddE, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pExpDetailsLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
                                 .addComponent(btnSubmitE, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnHomeE, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1782,14 +2088,14 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pExpensesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pExpDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
+                    .addComponent(spExpenses, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pMain.add(pExpenses, "pExpenses");
 
-        mFile.setMnemonic('F');
-        mFile.setText("File");
+        mAccount.setMnemonic('A');
+        mAccount.setText("Account");
 
         miLogout.setMnemonic('L');
         miLogout.setText("Logout");
@@ -1798,7 +2104,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 miLogoutActionPerformed(evt);
             }
         });
-        mFile.add(miLogout);
+        mAccount.add(miLogout);
 
         miExit.setMnemonic('E');
         miExit.setText("Exit");
@@ -1807,9 +2113,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 miExitActionPerformed(evt);
             }
         });
-        mFile.add(miExit);
+        mAccount.add(miExit);
 
-        mbMenuBar.add(mFile);
+        mbMenuBar.add(mAccount);
 
         mNav.setMnemonic('N');
         mNav.setText("Navigate");
@@ -1941,6 +2247,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 card.show(pMain, "pHome");
                 miHome.setEnabled(false);
                 btnLogin.setEnabled(false);
+                Set_Variables();
             }else {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Login Error"+"\n"+"Reason: The User ID and/or Password was incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -2049,6 +2356,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     txtNW.setForeground(Color.black);
                     delCharS(txtTT.getText(), txtIT.getText(), txtNI.getText(), txtTD.getText(), txtNW.getText());
                     calcMonthly();
+                    calcQuarterly();
                 }else {
                     noRecord();
                 }
@@ -2425,28 +2733,20 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Please input a valid email address");
                 }else {
                     Account Acc = new Account();
-                    String string = txtIncome.getText();
-                    String string2 = txtTFA.getText();
-                    string = string.substring(1);
-                    string2 = string2.substring(1);
+                    delCharF(txtIncome.getText(), txtTFA.getText());
                     conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
                     String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=?, TaxFree=? WHERE AccountID=?";
                     pst = conn.prepareStatement(sql);
                     pst.setString(1, txtForename.getText());
                     pst.setString(2, txtSurname.getText());
                     pst.setString(3, txtEmail.getText());
-                    pst.setString(4, string);
-                    pst.setString(5, string2);
+                    pst.setString(4, Income);
+                    pst.setString(5, TaxFree);
                     pst.setString(6, txtAccID.getText());
                     pst.execute();
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
                     if(!txtIncome.getText().equals("£")) {
-                        delChar = txtIncome.getText();
-                        delChar2 = txtTFA.getText();
-                        delChar = delChar.substring(1);
-                        delChar2 = delChar2.substring(1);
-                        Income = delChar;
-                        TaxFree = delChar2;
+                        delCharF(txtIncome.getText(), txtTFA.getText());
                         txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
                         txtTT.setForeground(Color.black);
                         txtIT.setText("£"+Acc.getIncometax());
@@ -2457,7 +2757,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         txtTD.setForeground(Color.black);
                         txtNW.setText("£"+Acc.getNetwage());
                         txtNW.setForeground(Color.black);
+                        delCharS(txtTT.getText(), txtIT.getText(), txtNI.getText(), txtTD.getText(), txtNW.getText());
                         calcMonthly();
+                        calcQuarterly();
                     }else {
                         txtIncome.setText("Income...");
                         txtIncome.setForeground(Color.gray);
@@ -2875,16 +3177,24 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dcUtilities;
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblExpReturn;
+    private javax.swing.JLabel lblExpReturnQ;
     private javax.swing.JLabel lblExpenses;
+    private javax.swing.JLabel lblExpensesReturnM;
     private javax.swing.JLabel lblExpensesTitle;
+    private javax.swing.JLabel lblExpensesTitleM;
+    private javax.swing.JLabel lblExpensesTitleQ;
     private javax.swing.JLabel lblIncome;
     private javax.swing.JLabel lblIncomeM;
     private javax.swing.JLabel lblIncomeQ;
     private javax.swing.JLabel lblIncomeReturn;
+    private javax.swing.JLabel lblIncomeReturnM;
+    private javax.swing.JLabel lblIncomeReturnQ;
     private javax.swing.JLabel lblIncomeTax;
     private javax.swing.JLabel lblIncomeTaxM;
     private javax.swing.JLabel lblIncomeTaxQ;
     private javax.swing.JLabel lblIncomeTitle;
+    private javax.swing.JLabel lblIncomeTitleM;
+    private javax.swing.JLabel lblIncomeTitleQ;
     private javax.swing.JLabel lblLoginTitle;
     private javax.swing.JLabel lblNationalInsurance;
     private javax.swing.JLabel lblNationalInsuranceM;
@@ -2896,7 +3206,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JLabel lblNewLogin;
     private javax.swing.JLabel lblOverview;
     private javax.swing.JLabel lblSavedReturn;
+    private javax.swing.JLabel lblSavedReturnM;
+    private javax.swing.JLabel lblSavedReturnQ;
     private javax.swing.JLabel lblSavedTitle;
+    private javax.swing.JLabel lblSavedTitleM;
+    private javax.swing.JLabel lblSavedTitleQ;
     private javax.swing.JLabel lblTaxFreeAllowance;
     private javax.swing.JLabel lblTaxFreeAllowanceM;
     private javax.swing.JLabel lblTaxFreeAllowanceQ;
@@ -2908,9 +3222,13 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotalTaxQ;
     private javax.swing.JLabel lblUtilities;
     private javax.swing.JLabel lblUtilityReturn;
+    private javax.swing.JLabel lblUtilityReturnM;
+    private javax.swing.JLabel lblUtilityReturnQ;
     private javax.swing.JLabel lblUtilityTitle;
+    private javax.swing.JLabel lblUtilityTitleM;
+    private javax.swing.JLabel lblUtilityTitleQ;
     private javax.swing.JLabel lblpwError;
-    private javax.swing.JMenu mFile;
+    private javax.swing.JMenu mAccount;
     private javax.swing.JMenu mHelp;
     private javax.swing.JMenu mNav;
     private javax.swing.JMenuBar mbMenuBar;
@@ -2939,7 +3257,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JPanel pnlIncomeQ;
     private javax.swing.JPanel pnlIncomeY;
     private javax.swing.JPanel pnlOptions;
-    private javax.swing.JPanel pnlStatistics;
+    private javax.swing.JPanel pnlStatisticsM;
+    private javax.swing.JPanel pnlStatisticsQ;
+    private javax.swing.JPanel pnlStatisticsY;
     private javax.swing.JRadioButton rbAddE;
     private javax.swing.JRadioButton rbAddU;
     private javax.swing.JRadioButton rbDeleteA;
@@ -2953,6 +3273,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private javax.swing.JTable tblExpenses;
     private javax.swing.JTable tblUtilities;
     private javax.swing.JTabbedPane tpIncome;
+    private javax.swing.JTabbedPane tpTotalIncome;
     private javax.swing.JTextField txtAccID;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtExpValue;
