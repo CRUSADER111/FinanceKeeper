@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2017 at 10:23 PM
+-- Generation Time: Apr 25, 2017 at 05:40 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -32,21 +32,20 @@ CREATE TABLE `accounts` (
   `Forename` varchar(30) DEFAULT '',
   `Surname` varchar(30) DEFAULT '',
   `Email` varchar(40) DEFAULT '',
-  `Income` varchar(20) DEFAULT '',
-  `TaxFree` varchar(20) DEFAULT ''
+  `Income` varchar(20) DEFAULT '0',
+  `TaxFree` varchar(20) DEFAULT '0',
+  `NetWage` varchar(20) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`AccountID`, `Password`, `Forename`, `Surname`, `Email`, `Income`, `TaxFree`) VALUES
-(2525, '$2a$10$VBSuMODXI6p/iIrRz05.ae.LrCATq9TwUslxi/bnx.7WaPQmgP1J.', '', '', '', '', ''),
-(4343, '$2a$10$hVwkAlGP1quVHWJdTYPlGerF.XZ1ZluBA.RbT7M6jz7tI.WPGsaOK', 'Alex', 'Test', 'test@gmail.com', '10000.0', ''),
-(4444, '$2a$10$MRhYIAxc4C7CaWjKd.EWye5H5vYF35bhW1eOL/3/LDLwUu13hCMfW', '', '', '', '', ''),
-(4545, '$2a$10$nhAyVU7F2QBWMFMqUamu5epEvlfOPDAb6LJM6nkYdb6zzMhtmz1tO', 'Alex', 'Morrison', 'asmorrison@hotmail.co.uk', '16000.0', '11500.0'),
-(5555, '$2a$12$VLGhtf1zxkskOT3PEzU6ie4FqlWucMsRdP8lGronBkvev0BBrlmAa', 'Alex', 'Morrison', 'Test@gmail.com', '14000.0', '11500.0'),
-(7777, '$2a$12$fngptem0NU64qLhrXCbileqisVehYF31tXkti9IVS0vbMNnHR6TEu', '', '', '', '', '');
+INSERT INTO `accounts` (`AccountID`, `Password`, `Forename`, `Surname`, `Email`, `Income`, `TaxFree`, `NetWage`) VALUES
+(4545, '$2a$10$nhAyVU7F2QBWMFMqUamu5epEvlfOPDAb6LJM6nkYdb6zzMhtmz1tO', 'Alex', 'Morrison', 'asmorrison@hotmail.co.uk', '16000.0', '11500.0', '14166.04'),
+(5555, '$2a$12$QNVbt7vrwJsqUe.TcA6vX.2tPYk8xno5wPXixhjU/BaEEp43FNrrq', 'Alex', 'Test', 'test@gmail.com', '14000.0', '11500.0', '12806.04'),
+(6666, '$2a$12$HJLppg0F6S7Xy/gGT.lHrep.8WUW.139pEVIu/vMEZ6E/V4FOhnOK', 'Alex', 'Test', 'test@gmail.com', '10000.0', '11500.0', '9786.04'),
+(7777, '$2a$12$gP2Ka30gg4hFuaZs96DDTewClBgMFvYo/ZLZqcty7qW8dWPcKcrX6', 'Alex', 'Test', 'test@gmail.com', '15000.0', '11500.0', '13486.04');
 
 -- --------------------------------------------------------
 
@@ -92,7 +91,7 @@ INSERT INTO `utilities` (`UtilityID`, `AccountID`, `Utility`, `Value`, `BillingC
 (1, 4545, 'Gas', '75.76', '3 Month', '12-Apr-2017'),
 (2, 4545, 'Water', '45.26', '1 Month', '09-Apr-2017'),
 (3, 4545, 'Electric', '74.22', '4 Month', '12-Apr-2017'),
-(4, 4646, 'Council Tax', '121.34', '1 Month', '12-Apr-2017');
+(4, 4646, 'Council Tax', '135.76', '1 Month', '12-Apr-2017');
 
 --
 -- Indexes for dumped tables

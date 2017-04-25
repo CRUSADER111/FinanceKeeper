@@ -439,10 +439,10 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="122" max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblOverview" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="tpTotalIncome" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="tpTotalIncome" alignment="1" min="-2" pref="379" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnlOptions" min="-2" max="-2" attributes="0"/>

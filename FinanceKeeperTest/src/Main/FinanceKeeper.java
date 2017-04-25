@@ -37,6 +37,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     static String password = "";
+    double inc = 0;
+    double util = 0;
+    double exp = 0;
     String Income = "";
     String TaxFree = "";
     String TT = "";
@@ -251,6 +254,28 @@ public class FinanceKeeper extends javax.swing.JFrame {
         NW = delChar7.substring(1);
     }
     
+    public void totalSaved() {
+        Account Acc = new Account();
+        if(inc != 0 || exp != 0 || util != 0) {
+            double SavedY = inc - (exp+util);
+            double SavedM = SavedY/12;
+            double SavedQ = SavedY/3;
+            SavedY = Acc.round(SavedY, 2, BigDecimal.ROUND_HALF_UP);
+            String SavedYC = Double.toString(SavedY);
+            lblSavedReturn.setText(SavedYC);
+            SavedM = Acc.round(SavedM, 2, BigDecimal.ROUND_HALF_UP);
+            String SavedMC = Double.toString(SavedM);
+            lblSavedReturnM.setText(SavedMC);
+            SavedQ = Acc.round(SavedQ, 2, BigDecimal.ROUND_HALF_UP);
+            String SavedQC = Double.toString(SavedQ);
+            lblSavedReturnQ.setText(SavedQC);
+        }else {
+            lblSavedReturn.setText("Waiting for Total Saved Income...");
+            lblSavedReturnM.setText("Waiting for Total Saved Income...");
+            lblSavedReturnQ.setText("Waiting for Total Saved Income...");
+        }
+    }
+    
     /**
      * ArrayList to store table data from the database, specifically for the Utility table.
      * @return 
@@ -379,6 +404,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         if(sum != 0.0) {
             double sumY = sum / y;
             sumY = acc.round(sumY, 2, BigDecimal.ROUND_HALF_UP);
+            inc = sumY;
             String totalY = Double.toString(sumY);
             lblIncomeReturn.setText("£"+totalY);
             double sumM = sum / m;
@@ -420,7 +446,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }
     
     /**
-     * Use the data stored in the TotalIncome ArrayList and perform calculations 
+     * Use the data stored in the TotalExpense ArrayList and perform calculations 
      * on the data and set them to labels for reference to the user.
      * @param y
      * @param m
@@ -442,6 +468,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         if(sum != 0.0) {
             double sumY = sum / y;
             sumY = acc.round(sumY, 2, BigDecimal.ROUND_HALF_UP);
+            exp = sumY;
             String totalY = Double.toString(sumY);
             lblExpReturn.setText("£"+totalY);
             double sumM = sum / m;
@@ -457,6 +484,70 @@ public class FinanceKeeper extends javax.swing.JFrame {
             lblExpReturn.setText(phI);
             lblExpReturnM.setText(phI);
             lblExpReturnQ.setText(phI);
+        }
+    }
+    
+    /**
+     * ArrayList to store table data from the database, specifically for the TotalUtility calculations.
+     * @return 
+     */
+    public ArrayList<TotalUtility> getTotalUtility() {
+        ArrayList<TotalUtility> totalUtility = new ArrayList<>();
+        String query = "SELECT Value FROM utilities";
+        try {
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery(query);
+            TotalUtility totalutility;
+            while (rs.next()) {
+                totalutility = new TotalUtility(rs.getString("Value"));
+                totalUtility.add(totalutility);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(FinanceKeeper.this, e);
+        }
+        return totalUtility;
+    }
+    
+    /**
+     * Use the data stored in the TotalUtility ArrayList and perform calculations 
+     * on the data and set them to labels for reference to the user.
+     * @param y
+     * @param m
+     * @param q
+     */
+    public void Set_TotalUtil(int y, int m, int q) {
+        Account acc = new Account();
+        ArrayList<TotalUtility> utility = getTotalUtility();
+        double sum = 0;
+        String item;
+        for (int i = 0; i < utility.size(); i++) {
+            item = utility.get(i).getNetUtil();
+            if(!item.equals("")) {
+                sum = sum + Double.parseDouble(item);
+            }else {
+                sum = 0.0;
+            } 
+        }
+        if(sum != 0.0) {
+            double sumY = sum / y;
+            sumY = acc.round(sumY, 2, BigDecimal.ROUND_HALF_UP);
+            util = sumY;
+            String totalY = Double.toString(sumY);
+            lblUtilityReturn.setText("£"+totalY);
+            double sumM = sum / m;
+            sumM = acc.round(sumM, 2, BigDecimal.ROUND_HALF_UP);
+            String totalM = Double.toString(sumM);
+            lblUtilityReturnM.setText("£"+totalM);
+            double sumQ = sum / q;
+            sumQ = acc.round(sumQ, 2, BigDecimal.ROUND_HALF_UP);
+            String totalQ = Double.toString(sumQ);
+            lblUtilityReturnQ.setText("£"+totalQ);
+        }else {
+            String phI = "Waiting for Total Expense Value...";
+            lblUtilityReturn.setText(phI);
+            lblUtilityReturnM.setText(phI);
+            lblUtilityReturnQ.setText(phI);
         }
     }
     
@@ -1184,10 +1275,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
         pHomeLayout.setHorizontalGroup(
             pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pHomeLayout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(pHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblOverview, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tpTotalIncome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tpTotalIncome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110))
@@ -2307,6 +2398,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 btnLogin.setEnabled(false);
                 Set_Totals(1, 12, 3);
                 Set_TotalExp(1, 12, 3);
+                Set_TotalUtil(1, 12, 3);
+                totalSaved();
             }else {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Login Error"+"\n"+"Reason: The User ID and/or Password was incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
