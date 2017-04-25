@@ -333,7 +333,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }
     
     /**
-     * ArrayList to store table data from the database, specifically for the Expenses table.
+     * ArrayList to store table data from the database, specifically for the TotalIncome calculations.
      * @return 
      */
     public ArrayList<TotalIncome> getTotalIncome() {
@@ -346,7 +346,11 @@ public class FinanceKeeper extends javax.swing.JFrame {
             TotalIncome totalincome;
             while (rs.next()) {
                 totalincome = new TotalIncome(rs.getString("NetWage"));
-                totalIncome.add(totalincome);
+                if(!rs.getString("NetWage").equals("et Wage...")) {
+                    totalIncome.add(totalincome);
+                }else {
+                    rs.next();
+                }
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(FinanceKeeper.this, e);
@@ -355,8 +359,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }
     
     /**
-     * Use the data stored in the Expense ArrayList and set the data to their
-     * correct placement in the table.
+     * Use the data stored in the TotalIncome ArrayList and perform calculations 
+     * on the data and set them to labels for reference to the user.
      * @param y
      * @param m
      * @param q
@@ -368,10 +372,8 @@ public class FinanceKeeper extends javax.swing.JFrame {
         String item;
         for (int i = 0; i < income.size(); i++) {
             item = income.get(i).getNetWage();
-            if(!item.equals("")) {
+            if(!item.equals("") || !item.equals("et Wage...")) {
                 sum = sum + Double.parseDouble(item);
-            }else {
-                sum = 0.0;
             } 
         }
         if(sum != 0.0) {
@@ -392,6 +394,69 @@ public class FinanceKeeper extends javax.swing.JFrame {
             lblIncomeReturn.setText(phI);
             lblIncomeReturnM.setText(phI);
             lblIncomeReturnQ.setText(phI);
+        }
+    }
+    
+    /**
+     * ArrayList to store table data from the database, specifically for the TotalExpense calculations.
+     * @return 
+     */
+    public ArrayList<TotalExpense> getTotalExpense() {
+        ArrayList<TotalExpense> totalExpense = new ArrayList<>();
+        String query = "SELECT Value FROM expenses";
+        try {
+            conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery(query);
+            TotalExpense totalexpense;
+            while (rs.next()) {
+                totalexpense = new TotalExpense(rs.getString("Value"));
+                totalExpense.add(totalexpense);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(FinanceKeeper.this, e);
+        }
+        return totalExpense;
+    }
+    
+    /**
+     * Use the data stored in the TotalIncome ArrayList and perform calculations 
+     * on the data and set them to labels for reference to the user.
+     * @param y
+     * @param m
+     * @param q
+     */
+    public void Set_TotalExp(int y, int m, int q) {
+        Account acc = new Account();
+        ArrayList<TotalExpense> expense = getTotalExpense();
+        double sum = 0;
+        String item;
+        for (int i = 0; i < expense.size(); i++) {
+            item = expense.get(i).getNetExp();
+            if(!item.equals("")) {
+                sum = sum + Double.parseDouble(item);
+            }else {
+                sum = 0.0;
+            } 
+        }
+        if(sum != 0.0) {
+            double sumY = sum / y;
+            sumY = acc.round(sumY, 2, BigDecimal.ROUND_HALF_UP);
+            String totalY = Double.toString(sumY);
+            lblExpReturn.setText("£"+totalY);
+            double sumM = sum / m;
+            sumM = acc.round(sumM, 2, BigDecimal.ROUND_HALF_UP);
+            String totalM = Double.toString(sumM);
+            lblExpReturnM.setText("£"+totalM);
+            double sumQ = sum / q;
+            sumQ = acc.round(sumQ, 2, BigDecimal.ROUND_HALF_UP);
+            String totalQ = Double.toString(sumQ);
+            lblExpReturnQ.setText("£"+totalQ);
+        }else {
+            String phI = "Waiting for Total Expense Value...";
+            lblExpReturn.setText(phI);
+            lblExpReturnM.setText(phI);
+            lblExpReturnQ.setText(phI);
         }
     }
     
@@ -447,7 +512,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblUtilityTitleM = new javax.swing.JLabel();
         lblUtilityReturnM = new javax.swing.JLabel();
         lblExpensesTitleM = new javax.swing.JLabel();
-        lblExpensesReturnM = new javax.swing.JLabel();
+        lblExpReturnM = new javax.swing.JLabel();
         lblSavedTitleM = new javax.swing.JLabel();
         lblSavedReturnM = new javax.swing.JLabel();
         pnlStatisticsQ = new javax.swing.JPanel();
@@ -971,10 +1036,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
         lblExpensesTitleM.setText("Total Expenses");
         lblExpensesTitleM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lblExpensesReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblExpensesReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblExpensesReturnM.setText("Waiting for Total Expenses Value...");
-        lblExpensesReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lblExpReturnM.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblExpReturnM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExpReturnM.setText("Waiting for Total Expenses Value...");
+        lblExpReturnM.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lblSavedTitleM.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lblSavedTitleM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -994,7 +1059,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlStatisticsMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSavedReturnM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblExpensesReturnM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblExpReturnM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlStatisticsMLayout.createSequentialGroup()
                         .addGroup(pnlStatisticsMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUtilityTitleM, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1019,7 +1084,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblExpensesTitleM)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblExpensesReturnM)
+                .addComponent(lblExpReturnM)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSavedTitleM)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2241,6 +2306,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 miHome.setEnabled(false);
                 btnLogin.setEnabled(false);
                 Set_Totals(1, 12, 3);
+                Set_TotalExp(1, 12, 3);
             }else {
                 JOptionPane.showMessageDialog(FinanceKeeper.this, "Login Error"+"\n"+"Reason: The User ID and/or Password was incorrect.", "Login Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -2717,6 +2783,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
                 Pattern EmailCheck = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
                 Matcher matcherE = EmailCheck.matcher(txtEmail.getText());
                 Matcher matcher = regex.matcher(txtIncome.getText());
+                Matcher matcherT = regex.matcher(txtTFA.getText());
                 Matcher matcherF = regexF.matcher(txtForename.getText());
                 Matcher matcherS = regexS.matcher(txtSurname.getText());
                 if(matcher.find()) {
@@ -2727,22 +2794,12 @@ public class FinanceKeeper extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Use only letters for the Surname");
                 }else if(!matcherE.find()) {
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Please input a valid email address");
+                }else if(matcherT.find()) {
+                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Enter only numbers for Tax Free Allowance");
                 }else {
                     Account Acc = new Account();
                     delCharF(txtIncome.getText(), txtTFA.getText(), txtNW.getText());
-                    conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
-                    String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=?, TaxFree=?, NetWage=? WHERE AccountID=?";
-                    pst = conn.prepareStatement(sql);
-                    pst.setString(1, txtForename.getText());
-                    pst.setString(2, txtSurname.getText());
-                    pst.setString(3, txtEmail.getText());
-                    pst.setString(4, Income);
-                    pst.setString(5, TaxFree);
-                    pst.setString(6, NW);
-                    pst.setString(7, txtAccID.getText());
-                    pst.execute();
-                    JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
-                    if(!txtIncome.getText().equals("£")) {
+                    if(!txtIncome.getText().equals("£") && !txtTFA.getText().equals("£")) {
                         delCharF(txtIncome.getText(), txtTFA.getText(), txtNW.getText());
                         txtTT.setText("£"+Acc.getTotaltax(Income, TaxFree));
                         txtTT.setForeground(Color.black);
@@ -2755,6 +2812,18 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         txtNW.setText("£"+Acc.getNetwage());
                         txtNW.setForeground(Color.black);
                         delCharS(txtTT.getText(), txtIT.getText(), txtNI.getText(), txtTD.getText(), txtNW.getText());
+                        conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
+                        String sql = "UPDATE accounts SET Forename=?, Surname=?, Email=?, Income=?, TaxFree=?, NetWage=? WHERE AccountID=?";
+                        pst = conn.prepareStatement(sql);
+                        pst.setString(1, txtForename.getText());
+                        pst.setString(2, txtSurname.getText());
+                        pst.setString(3, txtEmail.getText());
+                        pst.setString(4, Income);
+                        pst.setString(5, TaxFree);
+                        pst.setString(6, NW);
+                        pst.setString(7, txtAccID.getText());
+                        pst.execute();
+                        JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Updated");
                         calcMonthly();
                         calcQuarterly();
                     }else {
@@ -3174,9 +3243,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dcUtilities;
     private javax.swing.JLabel lblAccount;
     private javax.swing.JLabel lblExpReturn;
+    private javax.swing.JLabel lblExpReturnM;
     private javax.swing.JLabel lblExpReturnQ;
     private javax.swing.JLabel lblExpenses;
-    private javax.swing.JLabel lblExpensesReturnM;
     private javax.swing.JLabel lblExpensesTitle;
     private javax.swing.JLabel lblExpensesTitleM;
     private javax.swing.JLabel lblExpensesTitleQ;

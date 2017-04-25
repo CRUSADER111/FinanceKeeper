@@ -731,7 +731,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblSavedReturnM" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="lblExpensesReturnM" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblExpReturnM" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblUtilityTitleM" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
@@ -761,7 +761,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblExpensesTitleM" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblExpensesReturnM" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblExpReturnM" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblSavedTitleM" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -836,7 +836,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblExpensesReturnM">
+                    <Component class="javax.swing.JLabel" name="lblExpReturnM">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="18" style="0"/>
