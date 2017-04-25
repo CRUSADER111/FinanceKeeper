@@ -2426,7 +2426,7 @@ public class FinanceKeeper extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(txtUserID.getText().equals("")) {
             txtUserID.setText("Enter User ID...");
-            txtUserID.setForeground(Color.LIGHT_GRAY);
+            txtUserID.setForeground(Color.gray);
             btnLogin.setEnabled(false);
         }else if(txtUserID.getText().equals("Enter User ID...")) {
             btnLogin.setEnabled(false);
@@ -2675,6 +2675,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
         miUtilities.setEnabled(true);
+        Set_Totals(1, 12, 3);
+        Set_TotalExp(1, 12, 3);
+        Set_TotalUtil(1, 12, 3);
+        totalSaved();
         homeReset();
     }//GEN-LAST:event_btnHomeUActionPerformed
 
@@ -2684,6 +2688,10 @@ public class FinanceKeeper extends javax.swing.JFrame {
         card.show(pMain, "pHome");
         miHome.setEnabled(false);
         miExpenses.setEnabled(true);
+        Set_Totals(1, 12, 3);
+        Set_TotalExp(1, 12, 3);
+        Set_TotalUtil(1, 12, 3);
+        totalSaved();
         homeReset();
     }//GEN-LAST:event_btnHomeEActionPerformed
 
@@ -2694,6 +2702,9 @@ public class FinanceKeeper extends javax.swing.JFrame {
         miHome.setEnabled(false);
         miAccounts.setEnabled(true);
         Set_Totals(1, 12, 3);
+        Set_TotalExp(1, 12, 3);
+        Set_TotalUtil(1, 12, 3);
+        totalSaved();
         homeReset();
     }//GEN-LAST:event_btnHomeAActionPerformed
 
