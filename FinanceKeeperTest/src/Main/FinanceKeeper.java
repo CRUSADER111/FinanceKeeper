@@ -2610,17 +2610,30 @@ public class FinanceKeeper extends javax.swing.JFrame {
     }//GEN-LAST:event_pfCheckPasswordFocusLost
 
     private void btnSubmitLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitLActionPerformed
+        System.out.println("New Account Submit button pressed...");
         try {
             Pattern AccountCheck = Pattern.compile("^\\d{4}$");
             Matcher AccountMatch = AccountCheck.matcher(txtNewID.getText());
+//            System.out.println("");
             int flag = 0;
+            System.out.println("Flag = "+flag);
             if(AccountMatch.find()) {
                 conn = DriverManager.getConnection(SQLDetails.URL, SQLDetails.USER, SQLDetails.PASS);
                 String sql = "SELECT AccountID FROM accounts";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
-                
+                System.out.println("Starting Account Check...");
+                while (!rs.isBeforeFirst()) {
+                if(!rs.isBeforeFirst()) {
+                    System.out.println("No Data...");
+                    flag = 1;
+                    rs.close();
+                    pst.close();
+                    System.out.println("Flag = "+flag);
+                    break;
+                    }
                 while (rs.next()) {
+                    System.out.println("In While loop...");
                     if(rs.getString(1).equals(txtNewID.getText())) {
                         JOptionPane.showMessageDialog(FinanceKeeper.this, "Account ID already in use!"+"\n"+"Choose another to Continue.");
                         break;
@@ -2628,19 +2641,23 @@ public class FinanceKeeper extends javax.swing.JFrame {
                         flag = 1;
                         rs.close();
                         pst.close();
+                        System.out.println("Flag = "+flag);
                         break;
                     }
                 }
+                }
                 if(flag == 1) {
+                    System.out.println("Starting new Account entry...");
                     password = pfNewPassword.getText();
                     String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
-                    
+                    System.out.println("Password Hashed...");
                     pst = conn.prepareStatement("INSERT INTO accounts (AccountID, Password) VALUES (?, ?)");
                     pst.setString(1, txtNewID.getText());
                     pst.setString(2, hashed);
                     pst.execute();
                     pst.close();
                     conn.close();
+                    System.out.println("Account entered into DB...");
                     JOptionPane.showMessageDialog(FinanceKeeper.this, "Account Created");
                     btnLogoutActionPerformed(evt);
                 }
